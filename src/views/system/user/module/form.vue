@@ -122,7 +122,7 @@ export default {
     },
     getRoles() {
       getRoles().then(res => {
-        this.roleName = res
+        this.roleName = res.data
       }).catch(err => {
         console.log(err.response.data.message)
       })

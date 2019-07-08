@@ -47,22 +47,22 @@ const actions = {
   // 获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
         const data = response.data
         if (!data) {
-          reject('登录状态过期，请重新登录。')
+          reject()
         }
-        const { name, avatar } = data
-        const roles = data.permission
+        const { usernames, avatar } = data
+        const roles = response.permission
         if (roles && roles.length > 0) { // 验证返回的菜单是否是一个非空数组
           commit('SET_ROLES', roles)
         } else {
           reject('获取权限失败，请重新登录或联系管理员！！')
         }
         commit('SET_USER', data)
-        commit('SET_NAME', name)
+        commit('SET_NAME', usernames)
         commit('SET_AVATAR', avatar)
-        resolve(data)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })

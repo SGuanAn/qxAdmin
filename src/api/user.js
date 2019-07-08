@@ -62,10 +62,7 @@ export function editUser(data){
 }
 
 //验证密码
-export function validPass(password) {
-  const data = {
-    password
-  }
+export function validPass(data) {
   return request({
     url: '/user/validPass',
     method: 'post',
@@ -74,9 +71,10 @@ export function validPass(password) {
 }
 
 //修改密码
-export function updatePass(password) {
+export function updatePass(from) {
   const data = {
-    password
+    password: from.confirmPass,
+    username: from.username,
   }
   return request({
     url: '/user/updatePass',

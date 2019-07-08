@@ -114,12 +114,12 @@ export default {
     },
     getPermissions() {
       getPermissionTree().then(res => {
-        this.permissions = res
+        this.permissions = res.data
       })
     },
     getMenus() {
       getMenuTree().then(res => {
-        this.menus = res
+        this.menus = res.data
       })
     },
     to() {

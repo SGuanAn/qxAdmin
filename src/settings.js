@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '勤学教育录单系统',
+  title: '勤学教育信息管理系统',
 
   /**
    * @type {boolean} true | false

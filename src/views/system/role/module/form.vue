@@ -61,10 +61,8 @@ export default {
     doAdd() {
       const time = Date.now()
       this.form.createTime = parseTime(time)
-      console.log(this.form)
       addRole(this.form).then(res => {
-        if(res.code == 1){
-           this.resetForm()
+        if(res.code == -1){
           this.$message({
             message: '名称已被占用，请重新添加！',
             type: 'warning'

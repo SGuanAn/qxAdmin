@@ -23,12 +23,18 @@
 <script>
 import store from '@/store'
 import { validPass, updatePass } from '@/api/user'
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
       if (value) {
-        validPass(value).then(res => {
-          if (res.status === 200) {
+        var data = {
+          username: this.user.username,
+          password: value
+        }
+        validPass(data).then(res => {
+          if (res.code === 200) {
             callback()
           } else {
             callback(new Error('旧密码错误，请检查'))
@@ -69,7 +75,8 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.loading = true
-          updatePass(this.form.confirmPass).then(res => {
+          this.form.username = this.user.username
+          updatePass(this.form).then(res => {
             this.resetForm()
             this.$notify({
               title: '密码修改成功，请重新登录',
@@ -95,6 +102,11 @@ export default {
       this.$refs['form'].resetFields()
       this.form = { oldPass: '', newPass: '', confirmPass: '' }
     }
+  },
+  computed:{
+    ...mapGetters([
+        'user'
+    ])
   }
 }
 </script>

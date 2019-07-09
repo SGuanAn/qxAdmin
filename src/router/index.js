@@ -17,17 +17,17 @@ export const constantRoutes = [
       component: () => import('@/views/404'),
       hidden: true
     },
-    {
-      path: '/',
-      component: Layout,
-      redirect: '/dashboard',
-      children: [{
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
-      }]
-    }
+    // {
+    //   path: '/',
+    //   component: Layout,
+    //   redirect: '/dashboard',
+    //   children: [{
+    //     path: 'dashboard',
+    //     name: 'Dashboard',
+    //     component: () => import('@/views/dashboard/index'),
+    //     meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
+    //   }]
+    // }
   ]
   
   /**
@@ -79,7 +79,7 @@ export const constantRoutes = [
         ]
       },
       {
-        path: '/DataAll',
+        path: '/',
         component: Layout,
         redirect: '/DataAll',
         children: [
@@ -90,6 +90,8 @@ export const constantRoutes = [
             meta: {
               title: '所有客户',
               icon: 'student',
+              noCache: true,
+              affix: true,
               roles: ['ADMIN', 'DATAALL_MENU']
             }
           }

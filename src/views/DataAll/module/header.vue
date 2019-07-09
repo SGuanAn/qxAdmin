@@ -54,31 +54,20 @@
         <el-button v-permission="['ADMIN', 'GUANGKAI_DELETE']" type="danger" size="mini" @click="handleDelete" icon="el-icon-delete">删除</el-button>
     </el-row>
     <el-row style="margin-top:15px">
-      <!-- <el-select v-model="formInline.TuitionFeeSoure" clearable placeholder="==请选择==" style="width:190px" size="mini">
-        <el-option label="未缴纳" value="未缴纳" />
-        <el-option label="已全部缴纳" value="已全部缴纳" />
-        <el-option label="部分缴纳" value="部分缴纳" />
-      </el-select> -->
       <el-select v-model="Audit" size="mini" multiple collapse-tags placeholder="审核方式">
         <el-option
           v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
         </el-option>
       </el-select>
-      <!-- <el-select v-model="formInline.StudentCategory" clearable placeholder="==请选择类型==" style="width:160px" size="mini">
-        <el-option label="课程专科" value="课程专科"></el-option>
-        <el-option label="专科" value="专科"></el-option>
-        <el-option label="本科（专升本）" value="本科（专升本）"></el-option>
-        <el-option label="课程本科（专升本）" value="课程本科（专升本）"></el-option>
-      </el-select> -->
-      <el-select v-model="Audit" size="mini" multiple collapse-tags placeholder="审核方式">
+      <el-select v-model="Entrance" style="width: 220px;" size="mini" multiple collapse-tags placeholder="申报窗口">
         <el-option
           v-for="item in options2"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.name"
+          :label="item.name"
+          :value="item.name">
         </el-option>
       </el-select>
       <el-date-picker
@@ -95,6 +84,7 @@
 </template>
 
 <script>
+import jsonData from '@/json/data.json' // 引用json数据
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import { deleteGuangk } from '@/api/student'
 import { parseTime } from '@/utils/index'
@@ -124,24 +114,8 @@ import { constants } from 'crypto';
         Audit:[],
         Entrance: [],
         downloadLoading: false,
-        options: [
-          {
-            value: '标准制',
-            label: '标准制'
-          },
-          {
-            value: '积分制',
-            label: '积分制'
-          },
-          {
-            value: '留学生',
-            label: '留学生'
-          },
-          {
-            value: '应届生',
-            label: '应届生'
-          }
-        ]
+        options: jsonData.examineMode,
+        options2: jsonData.Entrance
       }
     },
     computed:{
@@ -282,7 +256,6 @@ import { constants } from 'crypto';
         data['创建人'] = this.user.usernames
         data['创建时间'] = time
       })
-      console.log(results)
     }
   }
 }

@@ -7,12 +7,12 @@
             <el-table-column type="selection" width="30" />
             <el-table-column prop="name" label="姓名" />
             <el-table-column prop="phone" label="手机号码" />
-            <el-table-column prop="DocumentNumber" label="证件号" width="180" />
-            <el-table-column prop="StudentCategory" label="申报类型" />
-            <el-table-column prop="TuitionFeeSoure" label="入户方式" />
-            <el-table-column prop="whole" label="工作进度" />
-            <el-table-column prop="PayTuition" label="服务窗口" />
-            <el-table-column prop="Founder" label="归属用户" />
+            <el-table-column prop="IDNumber" label="证件号" width="180" />
+            <el-table-column prop="declare" label="申报方式" />
+            <el-table-column prop="Audit" label="审核方式" />
+            <el-table-column prop="progress" label="工作进度" />
+            <el-table-column prop="Entrance" label="申报窗口" />
+            <el-table-column prop="belong" label="归属用户" />
             <el-table-column prop="Founder" label="创建人" />
             <el-table-column :show-overflow-tooltip="true" prop="createTime" label="录入时间">
                 <template slot-scope="scope">
@@ -34,8 +34,8 @@
 <script>
 import VHeader from './module/header'
 import permission from '@/directive/permission/index' // 权限判断指令
-import { getGuangk } from '@/api/student'
-import { parseTime, deleteEmptyProperty } from '@/utils/index'
+import { getList } from '@/api/Alldata'
+import { parseTime } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 import edit from './module/edit'
 import see from './module/see'
@@ -57,16 +57,14 @@ export default {
         }
     },
     created(){
-        // this.getAll()
+        this.getAll()
     },
     methods:{
         parseTime,
-        deleteEmptyProperty,
         getAll(){
             this.listLoading = true
-            deleteEmptyProperty(this.searchVal)
             this.listQuery.searchVal = this.searchVal
-            getGuangk(this.listQuery).then(res => {
+            getList(this.listQuery).then(res => {
                 this.tableData = res.data
                 this.total = res.total
                 setTimeout(() => {

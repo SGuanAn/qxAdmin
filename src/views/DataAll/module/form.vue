@@ -335,7 +335,7 @@
 import jsonData from '@/json/Nation.json'
 import elDragDialog from '@/directive/el-drag-dialog'
 import Datas from '@/json/data.json'
-import { Guangk, editGuangk } from '@/api/student'
+import { addData, editData } from '@/api/Alldata'
 import { parseTime } from '@/utils/index'
 import VDistpicker from 'v-distpicker'
 import { mapGetters } from 'vuex'
@@ -398,9 +398,10 @@ export default {
                 Entrance:'', //申报窗口
                 payment:'', //付款方式
                 declare:'', //申报方式
-                progress:'', //工作进度
+                progress:'无', //工作进度
                 Remarks:'', //备注
                 major:'', //专业
+                Immigration:'', //迁移地
                 XueXin:'', //学信网账户
                 XueXinPassword:'', //学信网密码
             },
@@ -447,19 +448,7 @@ export default {
         const time = Date.now()
         this.form.createTime = parseTime(time)
         this.form.Founder = this.user.usernames
-        if((this.form.PayTuition === '0'|| this.form.PayTuition === '') && (this.form.UnpaidTuition != '0' || this.form.UnpaidTuition != '')){
-            this.form.TuitionFeeSoure = '未缴纳'
-            
-        }else if(this.form.PayTuition != '0' && this.form.UnpaidTuition != '0' && this.form.UnpaidTuition != ''){
-            this.form.TuitionFeeSoure = '部分缴纳'
-            
-        }else if(this.form.PayTuition != '0' && (this.form.UnpaidTuition === '0' || this.form.UnpaidTuition === '')){
-            this.form.TuitionFeeSoure = '已全部缴纳'
-            
-        }else{
-            this.form.TuitionFeeSoure = ''
-            
-        }
+        this.form.belong = '无'
         this.$refs['form'].validate((value) => {
             if(value){
                 if (this.isAdd) {
@@ -471,24 +460,24 @@ export default {
         })
     },
     doAdd(){
-        Guangk(this.form).then(res => {
+        addData(this.form).then(res => {
             if(res.code === 200) {
                 this.loading = true
                 this.resetForm()
                 this.$notify({
-                    title: '添加成功',
+                    title: res.msg,
                     type: 'success',
                     duration: 2500
                 })
                 this.loading = false
-            }else if(res.code === -200){
+            }else if(res.code === -1){
                 this.$notify({
-                    title: '此学员已存在',
+                    title: res.msg,
                     type: 'warning',
                     duration: 2500
                 })
             }
-            this.$parent.$parent.getAll()
+            this.$parent.$parent.sup_this.getAll()
         }).catch(err => {
             this.loading = false
             this.$notify({
@@ -499,7 +488,8 @@ export default {
         })
     },
     doEdit(){
-        editGuangk(this.form).then(res => {
+        console.log(this.form)
+        editData(this.form).then(res => {
             this.resetForm()
                 this.$notify({
                 title: '修改成功',

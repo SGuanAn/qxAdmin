@@ -50,7 +50,7 @@ const actions = {
       getInfo().then(response => {
         const data = response.data
         if (!data) {
-          reject()
+          reject('登录状态已过期！！')
         }
         const { usernames, avatar } = data
         const roles = response.permission

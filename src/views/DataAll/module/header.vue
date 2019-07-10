@@ -54,7 +54,7 @@
         <el-button v-permission="['ADMIN', 'GUANGKAI_DELETE']" type="danger" size="mini" @click="handleDelete" icon="el-icon-delete">删除</el-button>
     </el-row>
     <el-row style="margin-top:15px">
-      <el-select v-model="Audit" size="mini" multiple collapse-tags placeholder="审核方式">
+      <el-select v-model="formInline.Audit" size="mini" multiple collapse-tags placeholder="审核方式">
         <el-option
           v-for="item in options"
           :key="item.name"
@@ -62,7 +62,7 @@
           :value="item.name">
         </el-option>
       </el-select>
-      <el-select v-model="Entrance" style="width: 220px;" size="mini" multiple collapse-tags placeholder="申报窗口">
+      <el-select v-model="formInline.Entrance" style="width: 220px;" size="mini" multiple collapse-tags placeholder="申报窗口">
         <el-option
           v-for="item in options2"
           :key="item.name"
@@ -86,7 +86,7 @@
 <script>
 import jsonData from '@/json/data.json' // 引用json数据
 import permission from '@/directive/permission/index.js' // 权限判断指令
-import { deleteGuangk } from '@/api/student'
+import { deleteData } from '@/api/Alldata'
 import { parseTime } from '@/utils/index'
 import { mapGetters } from 'vuex'
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
@@ -111,8 +111,8 @@ import { constants } from 'crypto';
   },
     data() {
       return {
-        Audit:[],
-        Entrance: [],
+        // Audit:[],
+        // Entrance: [],
         downloadLoading: false,
         options: jsonData.examineMode,
         options2: jsonData.Entrance
@@ -134,7 +134,7 @@ import { constants } from 'crypto';
     methods: {
       parseTime,
       onSubmit() {
-        this.$emit('searchVal', this.formInline)
+        this.$emit('searchVal', this.formInline )
       },
       handleDelete(){
         var ids = []
@@ -153,7 +153,7 @@ import { constants } from 'crypto';
               cancelButtonText: '取消',
               type: 'warning'
             }).then(() => {
-                deleteGuangk(ids).then(res => {
+              deleteData(ids).then(res => {
                   this.$notify({
                     title: '删除成功',
                     type: 'success',

@@ -335,7 +335,7 @@
 import jsonData from '@/json/Nation.json'
 import elDragDialog from '@/directive/el-drag-dialog'
 import Datas from '@/json/data.json'
-import { addData, editData } from '@/api/Alldata'
+// import { addData, editData } from '@/api/Alldata'
 import { parseTime } from '@/utils/index'
 import VDistpicker from 'v-distpicker'
 import { mapGetters } from 'vuex'
@@ -389,7 +389,7 @@ export default {
                 address:'',// 通讯地址
                 Children:'0', //小孩随迁数
                 Account:'', //人保账号
-                AccountPassword:'', //人保账号密码
+                AccountPassword:'', //人保密码
                 Total:0, //总费用
                 Pay:0, //已缴纳
                 Unpaid: 0, //未缴

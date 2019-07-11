@@ -54,7 +54,7 @@
         <el-button v-permission="['ADMIN', 'GUANGKAI_DELETE']" type="danger" size="mini" @click="handleDelete" icon="el-icon-delete">删除</el-button>
     </el-row>
     <el-row style="margin-top:15px">
-      <el-select v-model="formInline.Audit" size="mini" multiple collapse-tags placeholder="审核方式">
+      <el-select v-model="formInline.Audit" size="mini" clearable placeholder="审核方式">
         <el-option
           v-for="item in options"
           :key="item.name"
@@ -62,7 +62,7 @@
           :value="item.name">
         </el-option>
       </el-select>
-      <el-select v-model="formInline.Entrance" style="width: 220px;" size="mini" multiple collapse-tags placeholder="申报窗口">
+      <el-select v-model="formInline.Entrance" style="width: 220px;" size="mini" clearable placeholder="申报窗口">
         <el-option
           v-for="item in options2"
           :key="item.name"
@@ -87,6 +87,7 @@
 import jsonData from '@/json/data.json' // 引用json数据
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import { deleteData } from '@/api/Alldata'
+import { addData } from '@/api/Wait'
 import { parseTime } from '@/utils/index'
 import { mapGetters } from 'vuex'
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
@@ -111,8 +112,6 @@ import { constants } from 'crypto';
   },
     data() {
       return {
-        // Audit:[],
-        // Entrance: [],
         downloadLoading: false,
         options: jsonData.examineMode,
         options2: jsonData.Entrance
@@ -171,7 +170,44 @@ import { constants } from 'crypto';
         }
       },
       //领取
-      Receive() {},
+      Receive() {
+        const ids = []
+        this.RowArr.forEach((data, index) => {
+          ids.push(data.id)
+        })
+        if(ids[0] === undefined){
+          this.$notify({
+            title: '请选择领取数据',
+            type: 'warning',
+            duration: 2500
+          })
+        } else {
+          const data = {
+              id: ids,
+              username: this.user.usernames
+          }
+          this.$confirm('是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              addData(data).then(res => {
+                  this.$notify({
+                    title: '领取成功',
+                    type: 'success',
+                    duration: 2500
+                  })
+                this.$parent.getAll();
+              })
+            }).catch(() => {
+              this.$notify({
+                type: 'info',
+                title: '已取消删除',
+                duration: 2500
+              });          
+          });
+        }
+      },
       //分配
       distribution() {},
       //导出
@@ -245,7 +281,7 @@ import { constants } from 'crypto';
         return true
       }
       this.$message({
-        message: 'Please do not upload files larger than 1m in size.',
+        message: '请不要上载大小超过1M的文件',
         type: 'warning'
       })
       return false

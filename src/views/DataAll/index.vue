@@ -35,7 +35,7 @@
 import VHeader from './module/header'
 import permission from '@/directive/permission/index' // 权限判断指令
 import { getList } from '@/api/Alldata'
-import { parseTime } from '@/utils/index'
+import { parseTime, deleteEmptyProperty } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 import edit from './module/edit'
 import see from './module/see'
@@ -61,9 +61,10 @@ export default {
     },
     methods:{
         parseTime,
+        deleteEmptyProperty,
         getAll(){
             this.listLoading = true
-            this.listQuery.searchVal = this.searchVal
+            this.listQuery.searchVal = deleteEmptyProperty(this.searchVal)
             getList(this.listQuery).then(res => {
                 this.tableData = res.data
                 this.total = res.total
@@ -75,9 +76,6 @@ export default {
         handleSelectionChange(val){
             this.idArr = val
         },
-        chakan(){
-           //查看
-        }
     }
 }
 </script>

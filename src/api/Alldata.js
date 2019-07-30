@@ -35,3 +35,30 @@ export function getList(query) {
       params: query
     })
 }
+
+// 领取
+export function receiveData(data) {
+  return request({
+      url: '/alldata/receive',
+      method: 'post',
+      data
+  })
+}
+
+//分配
+export function branchData(data) {
+  return request({
+    url: '/alldata/branch',
+    method: 'post',
+    data
+  })
+}
+
+//导入 Excel
+export function ImportExcel(data) {
+  return request({
+    url: '/alldata/excel',
+    method: 'post',
+    data
+  })
+}

@@ -26,7 +26,7 @@ export function logout() {
   })
 }
 
-//获取用户列表
+//查询用户列表
 export function getUsers(query){
   return request({
     url: '/user/list',
@@ -80,5 +80,13 @@ export function updatePass(from) {
     url: '/user/updatePass',
     method: 'put',
     data
+  })
+}
+
+//全部用户名
+export function getAllUsers() {
+  return request({
+    url: '/user/AllUsers',
+    method: 'get',
   })
 }

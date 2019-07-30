@@ -28,7 +28,6 @@ export default {
       const _this = this.$refs.form
       _this.getRoles()
       _this.roleId = this.data.role_id
-      console.log(_this)
       _this.form = { id: this.data.id, name: this.data.name, username: this.data.username, introduction: this.data.introduction, createTime: this.data.createTime,phone: this.data.phone, email:this.data.email,usernames:this.data.usernames}
     _this.dialog = true
     }

@@ -1,6 +1,6 @@
 <template>
     <div class="dialo">
-        <el-dialog v-el-drag-dialog :visible.sync="dialog" :title="isAdd ? '添加客户' : '客户信息'" append-to-body >
+        <el-dialog v-el-drag-dialog :visible.sync="dialog" :title="isAdd ? '添加客户' : '客户信息'" append-to-body>
             <el-form ref="form" :rules="rules" :model="form" size="small">
                 <div style="margin-left: 10px; margin-top: 10px; margin-right: 10px; margin-bottom:20px;">
                     <table border="1" bordercolor="#e1dbdb" style="border-collapse:collapse;" class="form  table-hover">
@@ -291,8 +291,8 @@
                                 </td>
                                 <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>申报方式：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="declare">
-                                        <el-select v-model="form.declare" placeholder="==请选择==" clearable :disabled='disabled' >
+                                    <el-form-item prop="Sdeclare">
+                                        <el-select v-model="form.Sdeclare" placeholder="==请选择==" clearable :disabled='disabled' >
                                             <el-option label="个人申报" value="个人申报" />
                                             <el-option label="单位申报" value="单位申报" />
                                         </el-select>
@@ -375,7 +375,7 @@ export default {
                 Gender: '',  //性别
                 age:'', // 年龄
                 IDNumber:'', //身份证号
-                BirthDate:'', //出生日期
+                BirthDate:'0', //出生日期
                 Nation:'', //民族
                 Marriage:'', //婚姻状况
                 phone:'', //手机号码
@@ -397,7 +397,7 @@ export default {
                 Audit:'', //审核方式
                 Entrance:'', //申报窗口
                 payment:'', //付款方式
-                declare:'', //申报方式
+                Sdeclare:'', //申报方式
                 progress:'无', //工作进度
                 Remarks:'', //备注
                 major:'', //专业
@@ -409,6 +409,39 @@ export default {
                 name: [
                     { required: true, message: '姓名不能为空'}
                 ],
+                Gender: [
+                    { required: true, message: '不能为空'}
+                ],
+                IDNumber: [
+                    { required: true, message: '不能为空'}
+                ],
+                Marriage: [
+                    { required: true, message: '不能为空'}
+                ],
+                phone: [
+                    { required: true, message: '不能为空'}
+                ],
+                Audit: [
+                    { required: true, message: '不能为空'}
+                ],
+                Sdeclare: [
+                    { required: true, message: '不能为空'}
+                ],
+                payment: [
+                    { required: true, message: '不能为空'}
+                ],
+                Entrance: [
+                    { required: true, message: '不能为空'}
+                ],
+                Pay: [
+                    { required: true, message: '不能为空'}
+                ],
+                Total: [
+                    { required: true, message: '不能为空'}
+                ],
+                Immigration:[
+                    { required: true, message: '不能为空'}
+                ]
             },
             fullnames:[],
             HouCity:[],
@@ -445,21 +478,23 @@ export default {
         this.form.HouseholdA = data.area.value
     },
     doSubmit(){
-        const time = Date.now()
-        this.form.createTime = parseTime(time)
         this.form.Founder = this.user.usernames
-        this.form.belong = '无'
         this.$refs['form'].validate((value) => {
             if(value){
                 if (this.isAdd) {
-                this.doAdd()
-                }else this.doEdit()
-            }else{
+                    this.doAdd()
+                }else {
+                    this.doEdit()
+                }
+            } else {
                 return false;
             }
         })
     },
     doAdd(){
+        this.form.belong = '无'
+        const time = Date.now()
+        this.form.createTime = parseTime(time)
         addData(this.form).then(res => {
             if(res.code === 200) {
                 this.loading = true
@@ -470,7 +505,7 @@ export default {
                     duration: 2500
                 })
                 this.loading = false
-            }else if(res.code === -1){
+            } else if(res.code === -1) {
                 this.$notify({
                     title: res.msg,
                     type: 'warning',
@@ -488,7 +523,6 @@ export default {
         })
     },
     doEdit(){
-        console.log(this.form)
         editData(this.form).then(res => {
             this.resetForm()
                 this.$notify({
@@ -525,6 +559,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .el-dialog__wrapper{
+    /deep/ .el-dialog__body{
+        height:500px;
+        overflow-x:scroll;
+    }
     .topTitle{
         height: 50px;
         font-weight: 900;
@@ -565,7 +603,7 @@ export default {
         background: #42b983;
     }
     /deep/ .el-dialog{
-        min-width: 1180px;
+        width: 1180px;
     }
     /deep/ .el-dialog__title{
         color: #fff;
@@ -575,7 +613,6 @@ export default {
         font-size: 16px;
     }
     /deep/ .el-input__inner{
-        // height: 100%;
         border-radius: 0;
         border: 0;
     }
@@ -590,9 +627,9 @@ export default {
         padding-left: 8px;
         color: #444;
     }
-    .formValue {
-        position: relative;
-        // width: auto;
-    }
+    // .formValue {
+    //     // position: relative;
+    //     // width: auto;
+    // }
 }
 </style>

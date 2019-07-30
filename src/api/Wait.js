@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 添加
+// 领取
 export function addData(data) {
     return request({
         url: '/wait/add',
@@ -9,12 +9,5 @@ export function addData(data) {
     })
 }
 
-// 查询列表
-export function getList(query) {
-    return request({
-      url: '/wait/getList',
-      method: 'get',
-      params: query
-    })
-}
+
 

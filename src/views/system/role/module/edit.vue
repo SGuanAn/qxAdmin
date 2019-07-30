@@ -26,12 +26,14 @@ export default {
   methods: {
     to() {
       const _this = this.$refs.form
-    //   _this.deptIds = []
-      _this.form = { id: this.data.id, name: this.data.name, remark: this.data.remark, dataScope: this.data.dataScope, level: this.data.level, 
-      createTime: this.data.createTime }
-    //   for (let i = 0; i < _this.form.depts.length; i++) {
-    //     _this.deptIds[i] = _this.form.depts[i].id
-    //   }
+      _this.form = {
+        id: this.data.id,
+        name: this.data.name,
+        remark: this.data.remark,
+        dataScope: this.data.dataScope,
+        level: this.data.level
+      }
+
     _this.dialog = true
     }
   }

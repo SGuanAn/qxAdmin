@@ -129,7 +129,7 @@ export default {
     },
     doAdd() {
       const time = Date.now()
-      this.form.createTime = parseTime(time)
+      this.form.createTime = time
       addUser(this.form).then(res => {
         if(res.code == 1){
           this.$message({
@@ -138,6 +138,7 @@ export default {
           });
         }
         if(res.code == 200){
+          console.log(res)
           this.resetForm()
           this.$notify({
             title: '添加成功',

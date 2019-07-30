@@ -291,8 +291,8 @@
                                 </td>
                                 <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>申报方式：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="declare">
-                                        <el-select v-model="form.declare" placeholder="==请选择==" clearable :disabled='disabled' >
+                                    <el-form-item prop="Sdeclare">
+                                        <el-select v-model="form.Sdeclare" placeholder="==请选择==" clearable :disabled='disabled' >
                                             <el-option label="个人申报" value="个人申报" />
                                             <el-option label="单位申报" value="单位申报" />
                                         </el-select>
@@ -397,7 +397,7 @@ export default {
                 Audit:'', //审核方式
                 Entrance:'', //申报窗口
                 payment:'', //付款方式
-                declare:'', //申报方式
+                Sdeclare:'', //申报方式
                 progress:'无', //工作进度
                 Remarks:'', //备注
                 major:'', //专业

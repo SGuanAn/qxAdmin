@@ -3,11 +3,10 @@
     <transition name="sidebarLogoFade">
       <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/user/personal">
         <img v-if="avatar" :src="avatar" class="sidebar-logo">
-        <!-- <h1 v-else class="sidebar-title">{{ title }} </h1> -->
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/user/personal">
         <img v-if="avatar" :src="avatar" class="sidebar-logo">
-        <!-- <h1 class="sidebar-title">{{ title }} </h1> -->
+        <h1 class="name"> {{ user.usernames }} </h1>
       </router-link>
     </transition>
   </div>
@@ -25,7 +24,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'avatar'
+      'avatar',
+      'user'
     ])
   },
   data() {
@@ -41,6 +41,10 @@ export default {
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }
+.name{
+  font-size: 18px;
+  color: #fff;
+}
 
 .sidebarLogoFade-enter,
 .sidebarLogoFade-leave-to {
@@ -50,8 +54,7 @@ export default {
 .sidebar-logo-container {
   position: relative;
   width: 100%;
-  height: 120px;
-  line-height: 120px;
+  height: 175px;
   background: #2b2f3a;
   text-align: center;
   overflow: hidden;
@@ -61,11 +64,11 @@ export default {
     width: 100%;
 
     & .sidebar-logo {
+      margin-top: 30px;
       width: 100px;
       height: 100px;
       border-radius: 100px;
       vertical-align: middle;
-      margin-right: 12px;
     }
 
     & .sidebar-title {
@@ -79,7 +82,6 @@ export default {
       // vertical-align: middle;
     }
   }
-
   &.collapse {
     height: 70px;
     line-height: 70px;
@@ -87,6 +89,7 @@ export default {
       margin-right: 0px;
       width: 50px;
       height: 50px;
+      margin-top: 0;
       border-radius: 32px;
     }
   }

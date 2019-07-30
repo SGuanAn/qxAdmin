@@ -8,7 +8,7 @@
         <!-- 导出 -->
         <div style="display: inline-block;">
           <el-button
-              v-permission="['ADMIN', 'GUANGKAI_EXPORT']"
+              v-permission="['ADMIN', 'BUSINESS_EXPORT']"
               :loading="downloadLoading"
               size="mini"
               class="filter-item"
@@ -23,18 +23,43 @@
               class="filter-item"
               type="primary"
               icon="el-icon-tickets"
-              @click="step">审核资料</el-button>
+              @click="step">核对资料</el-button>
+        </div>
+        <!-- 转出 -->
+        <div style="display: inline-block;">
+          <el-popover v-model="visible" title="选择用户" placement="right" width="200" trigger="manual">
+            <div>
+              <el-select v-model="username" style="width:100%;" size="mini" clearable placeholder="选择用户">
+                <el-option
+                  v-for="item in userData"
+                  :key="item.usernames"
+                  :label="item.usernames"
+                  :value="item.usernames">
+                </el-option>
+            </el-select>
+            <div class="popover-footer">
+                <el-button type="text" @click="visible = false" size="mini">取消</el-button>
+                <el-button type="primary" @click="doSubmit" size="mini">确认</el-button>
+            </div>
+            </div>
+            <el-button
+            class="filter-item"
+            icon="el-icon-share"
+            size="mini"
+            type="danger"
+            slot="reference"
+            @click="distribution">转出</el-button>
+          </el-popover>
+        </div>
+        <!-- 退费 -->
+        <div style="display: inline-block;">
+          <el-button
+          type="danger"
+          size="mini"
+          @click="Refund"><svg-icon icon-class="refund1" />退费</el-button>
         </div>
     </el-row>
     <el-row style="margin-top:15px">
-      <el-select v-model="formInline.Audit" size="mini" clearable placeholder="审核方式">
-        <el-option
-          v-for="item in options"
-          :key="item.name"
-          :label="item.name"
-          :value="item.name">
-        </el-option>
-      </el-select>
       <el-select v-model="formInline.Entrance" style="width: 220px;" size="mini" clearable placeholder="申报窗口">
         <el-option
           v-for="item in options2"
@@ -59,7 +84,8 @@
 <script>
 import jsonData from '@/json/data.json' // 引用json数据
 import permission from '@/directive/permission/index.js' // 权限判断指令
-import { addData } from '@/api/Wait'
+import { checkData, branchData, RefundData } from '@/api/standard'
+import { getAllUsers } from '@/api/user'
 import { parseTime } from '@/utils/index'
 import { mapGetters } from 'vuex'
 import UploadExcelComponent from '@/components/UploadExcel/index.vue'
@@ -84,6 +110,9 @@ import { constants } from 'crypto';
   },
     data() {
       return {
+        visible:false,
+        userData:[],
+        username:'',
         downloadLoading: false,
         options: jsonData.examineMode,
         options2: jsonData.Entrance
@@ -119,6 +148,113 @@ import { constants } from 'crypto';
             type: 'warning',
             duration: 2500
           })
+        } else {
+          this.$confirm('是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              checkData(ids).then(res => {
+                if(res.code === 200) {
+                  this.$notify({
+                    title: res.msg,
+                    type: 'success',
+                    duration: 2500
+                  })
+                  this.$parent.getAll();
+                }
+              })
+            }).catch(() => {
+              this.$notify({
+                type: 'info',
+                title: '已取消删除',
+                duration: 2500
+              });          
+          });
+        }
+      },
+      //转出
+      distribution() {
+        this.visible = !this.visible
+        getAllUsers().then(res => {
+          this.userData = res.data
+        })
+      },
+      //转出
+      doSubmit(){
+        const ids = []
+        this.RowArr.forEach((data, index) => {
+          ids.push(data.id)
+        })
+        if(ids[0] === undefined){
+          this.$notify({
+            title: '请选择数据',
+            type: 'warning',
+            duration: 2500
+          })
+        } else if(this.username === '') {
+          this.$notify({
+            title: '请选择用户',
+            type: 'warning',
+            duration: 2500
+          })
+        } else {
+          const data = {id: ids, username: this.username}
+          branchData(data).then(res => {
+            if(res.code === 200){
+                this.$notify({
+                  title: '操作成功',
+                  type: 'success',
+                  duration: 2500
+                })
+                this.$parent.getAll();
+            }
+            if(res.code === -200) {
+              this.$notify({
+                title: res.msg,
+                type: 'warning',
+                duration: 0
+              })
+            }
+          })
+          this.visible = false
+        }
+      },
+      //退费
+      Refund() {
+        const ids = []
+        this.RowArr.forEach((data, index) => {
+          ids.push(data.id)
+        })
+        if(ids[0] === undefined){
+          this.$notify({
+            title: '请选择数据',
+            type: 'warning',
+            duration: 2500
+          })
+        } else {
+          this.$confirm('是否继续?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+              RefundData(ids).then(res => {
+                if(res.code === 200) {
+                  this.$notify({
+                    title: res.msg,
+                    type: 'success',
+                    duration: 2500
+                  })
+                  this.$parent.getAll();
+                }
+              })
+            }).catch(() => {
+              this.$notify({
+                type: 'info',
+                title: '已取消删除',
+                duration: 2500
+              });          
+          });
         }
       },
       //导出
@@ -188,7 +324,7 @@ import { constants } from 'crypto';
                 'Audit',
                 'Entrance',
                 'payment',
-                'declare',
+                'Sdeclare',
                 'progress',
                 'Remarks',
                 'major',
@@ -219,7 +355,10 @@ import { constants } from 'crypto';
 }
 </script>
 <style lang="scss" scoped>
-
+.popover-footer{
+  text-align: right;
+  margin-top: 10px;
+}
 .search-container input {
     height: 33px;
     line-height: 33px;

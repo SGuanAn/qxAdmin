@@ -8,7 +8,7 @@
             <el-table-column prop="name" label="姓名" />
             <el-table-column prop="phone" label="手机号码" />
             <el-table-column prop="IDNumber" label="证件号" width="180" />
-            <el-table-column prop="declare" label="申报方式" />
+            <el-table-column prop="Sdeclare" label="申报方式" />
             <el-table-column prop="Audit" label="审核方式" />
             <el-table-column prop="progress" label="工作进度" />
             <el-table-column prop="Entrance" label="申报窗口" />
@@ -21,8 +21,8 @@
             </el-table-column>
             <el-table-column align="center" label="操作" width="200px;">
                 <template slot-scope="scope">
-                    <see v-permission="['ADMIN', 'GUANGKAI_SEE']" :data="scope.row" :sup_this="sup_this" />
-                    <edit v-permission="['ADMIN', 'GUANGKAI_EDIT']" :data="scope.row" :sup_this="sup_this" />
+                    <see v-permission="['ADMIN', 'DATAALL_SEE']" :data="scope.row" :sup_this="sup_this" />
+                    <edit v-permission="['ADMIN', 'DATAALL_EDIT']" :data="scope.row" :sup_this="sup_this" />
                 </template>
             </el-table-column>
         </el-table>
@@ -49,7 +49,7 @@ export default {
             tableData: [],
             searchVal:{},
             idArr:[],
-            total: 1,
+            total: 0,
             listQuery: {
                 page: 1,
                 limit: 20
@@ -57,7 +57,7 @@ export default {
         }
     },
     created(){
-        this.getAll()
+        // this.getAll()
     },
     methods:{
         parseTime,
@@ -73,8 +73,8 @@ export default {
                 }, 500)
             })
         },
-        handleSelectionChange(val){
-            this.idArr = val
+        handleSelectionChange(row){
+            this.idArr = row
         },
     }
 }

@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     to() {
+      
       const _this = this.$refs.form
       _this.placeholders.city = this.data.HouseholdCity
       _this.placeholders.province = this.data.HouseholdProvince
@@ -60,13 +61,14 @@ export default {
         Audit:this.data.Audit,
         Entrance:this.data.Entrance,
         payment:this.data.payment,
-        declare:this.data.declare,
+        Sdeclare:this.data.Sdeclare,
         progress:this.data.progress,
         Remarks:this.data.Remarks,
         major:this.data.major,
         Immigration:this.data.Immigration,
         XueXin:this.data.XueXin,
         XueXinPassword:this.data.XueXinPassword,
+        createTime: this.data.createTime
       }
     _this.dialog = true
     }

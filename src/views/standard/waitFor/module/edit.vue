@@ -60,7 +60,7 @@ export default {
         Audit:this.data.Audit,
         Entrance:this.data.Entrance,
         payment:this.data.payment,
-        declare:this.data.declare,
+        Sdeclare:this.data.Sdeclare,
         progress:this.data.progress,
         Remarks:this.data.Remarks,
         major:this.data.major,

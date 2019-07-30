@@ -8,7 +8,7 @@
             <el-table-column prop="name" label="姓名" />
             <el-table-column prop="phone" label="手机号码" />
             <el-table-column prop="IDNumber" label="证件号" width="180" />
-            <el-table-column prop="declare" label="申报方式" />
+            <el-table-column prop="Sdeclare" label="申报方式" />
             <el-table-column prop="Audit" label="审核方式" />
             <el-table-column prop="progress" label="工作进度" />
             <el-table-column prop="Entrance" label="申报窗口" />
@@ -21,8 +21,8 @@
             </el-table-column>
             <el-table-column align="center" label="操作" width="200px;">
                 <template slot-scope="scope">
-                    <see v-permission="['ADMIN', 'GUANGKAI_SEE']" :data="scope.row" :sup_this="sup_this" />
-                    <edit v-permission="['ADMIN', 'GUANGKAI_EDIT']" :data="scope.row" :sup_this="sup_this" />
+                    <see v-permission="['ADMIN', 'BUSINESS_SEE']" :data="scope.row" :sup_this="sup_this" />
+                    <edit v-permission="['ADMIN', 'BUSINESS_EDIT']" :data="scope.row" :sup_this="sup_this" />
                 </template>
             </el-table-column>
         </el-table>
@@ -34,7 +34,7 @@
 <script>
 import VHeader from './module/header'
 import permission from '@/directive/permission/index' // 权限判断指令
-import { getList } from '@/api/Wait'
+import { WaitList } from '@/api/standard'
 import { mapGetters } from 'vuex'
 import { parseTime, deleteEmptyProperty } from '@/utils/index'
 import Pagination from '@/components/Pagination'
@@ -67,7 +67,7 @@ export default {
             this.listLoading = true
             this.listQuery.searchVal = deleteEmptyProperty(this.searchVal)
             this.listQuery.username = this.user.usernames
-            getList(this.listQuery).then(res => {
+            WaitList(this.listQuery).then(res => {
                 this.tableData = res.data
                 this.total = res.total
                 setTimeout(() => {

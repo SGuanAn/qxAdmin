@@ -66,6 +66,7 @@ export default {
         major:this.data.major,
         Immigration:this.data.Immigration,
         XueXin:this.data.XueXin,
+        belong:this.data.belong,
         XueXinPassword:this.data.XueXinPassword,
         createTime: this.data.createTime
       }

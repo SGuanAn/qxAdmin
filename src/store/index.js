@@ -8,6 +8,7 @@ import user from './modules/user'
 import search from './modules/search'
 import permission from './modules/permission'
 import tagsView from './modules/tagsView'
+import file from './modules/file'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,8 @@ const store = new Vuex.Store({
     tagsView,
     search,
     permission,
-    user
+    user,
+    file
   },
   getters
 })

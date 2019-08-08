@@ -67,6 +67,7 @@ export default {
         Immigration:this.data.Immigration,
         XueXin:this.data.XueXin,
         XueXinPassword:this.data.XueXinPassword,
+        belong:this.data.belong
       }
     _this.dialog = true
     }

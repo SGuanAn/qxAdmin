@@ -65,6 +65,7 @@ export default {
         progress:this.data.progress,
         Remarks:this.data.Remarks,
         major:this.data.major,
+        belong:this.data.belong,
         Immigration:this.data.Immigration,
         XueXin:this.data.XueXin,
         XueXinPassword:this.data.XueXinPassword,

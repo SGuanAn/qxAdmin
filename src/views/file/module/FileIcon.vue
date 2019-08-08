@@ -7,7 +7,7 @@ export default {
     props: {
         type: {
             validator: function(value){
-                return ['default', 'folder', 'pdf', 'compress_file', "web",
+                return ['default', 'folder', 'pdf', 'compress_file', "web","png","jpg",
                     'video', 'audio', 'picture', 'doc', 'txt', 'torrent', 'ppt',
                     'code'].indexOf(value) !== -1
             }
@@ -63,5 +63,14 @@ export default {
 }
 .code {
     background-position: -596px -1424px;
+}
+.png {
+    background-position: -594px -1458px;
+}
+.jpg {
+    background-position: -594px -1458px;
+}
+.gif {
+    background-position: -594px -1458px;
 }
 </style>

@@ -8,9 +8,10 @@ const getters = {
   name: state => state.user.name,
   user: state => state.user.user,
   roles: state => state.user.roles,
-  updateAvatarApi: state => state.api.updateAvatarApi,
+  UploadDataApi: state => state.api.UploadDataApi,
   permission_routers: state => state.permission.routes,
   addRouters: state => state.permission.addRouters,
-  GET_VAL:state => state.search.keyword
+  GET_VAL:state => state.search.keyword,
+  FILE_PATH:state => state.file.fliePath
 }
 export default getters

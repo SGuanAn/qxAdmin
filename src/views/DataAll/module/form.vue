@@ -1,6 +1,6 @@
 <template>
     <div class="dialo">
-        <el-dialog v-el-drag-dialog :visible.sync="dialog" :title="isAdd ? '添加客户' : '客户信息'" append-to-body>
+        <el-dialog v-el-drag-dialog :visible.sync="dialog" :close-on-click-modal='false' :title="isAdd ? '添加客户' : '客户信息'" append-to-body>
             <el-form ref="form" :rules="rules" :model="form" size="small">
                 <div style="margin-left: 10px; margin-top: 10px; margin-right: 10px; margin-bottom:20px;">
                     <table border="1" bordercolor="#e1dbdb" style="border-collapse:collapse;" class="form  table-hover">
@@ -353,6 +353,13 @@ export default {
                 callback()
             }
         }
+        const validateIDCard = (rule, value, callback) => {
+            if (value && (!(/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(value) || (value.length !== 15 && value.length !== 18))) {
+                callback(new Error('身份证号码不规范'))
+            } else {
+                callback()
+            }
+        }
         return{
             learn: Datas.learn, // 赋值 json 学历
             MarriageData: Datas.Marriage,  // 赋值 json 婚姻情况
@@ -413,13 +420,14 @@ export default {
                     { required: true, message: '不能为空'}
                 ],
                 IDNumber: [
-                    { required: true, message: '不能为空'}
+                    { required: true,  message: '不能为空', trigger: 'blur' },
+                    { validator: validateIDCard, trigger: 'blur' }
                 ],
                 Marriage: [
                     { required: true, message: '不能为空'}
                 ],
                 phone: [
-                    { required: true, message: '不能为空'}
+                    { required: true, trigger: 'blur', validator: validPhone }
                 ],
                 Audit: [
                     { required: true, message: '不能为空'}
@@ -494,6 +502,7 @@ export default {
     doAdd(){
         this.form.belong = '无'
         const time = Date.now()
+        console.log(time)
         this.form.createTime = parseTime(time)
         addData(this.form).then(res => {
             if(res.code === 200) {
@@ -545,6 +554,12 @@ export default {
   watch:{
       Unpaid(val){
           this.form.Unpaid = val
+      },
+      BirthDate(val){
+          this.form.BirthDate = val
+      },
+      MyAge(val){
+          this.form.age = val
       }
   },
   computed:{
@@ -553,6 +568,19 @@ export default {
         ]),
         Unpaid:function() {
             return this.form.Unpaid = this.form.Total - this.form.Pay
+        },
+        BirthDate:function() {
+            return this.form.IDNumber.substring(6, 10) + "-" + this.form.IDNumber.substring(10, 12) + "-" + this.form.IDNumber.substring(12, 14);
+        },
+        MyAge:function() {
+            var myDate = new Date(); 
+            var month = myDate.getMonth() + 1; 
+            var day = myDate.getDate(); 
+            var age = myDate.getFullYear() - this.form.IDNumber.substring(6, 10) - 1;
+            if (this.form.IDNumber.substring(10, 12) < month || this.form.IDNumber.substring(10, 12) == month && this.form.IDNumber.substring(12, 14) <= day) { 
+                age++; 
+            }
+            return age;
         }
     }
 }

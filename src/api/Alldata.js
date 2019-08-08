@@ -13,7 +13,7 @@ export function addData(data) {
 export function deleteData(data) {
     return request({
       url: '/alldata/delete',
-      method: 'delete',
+      method: 'post',
       data
     })
 }

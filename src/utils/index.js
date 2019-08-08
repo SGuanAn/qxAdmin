@@ -98,3 +98,20 @@ export function deleteEmptyProperty(obj) {
   }
     return obj;
 }
+
+/**
+ * 计算文件大小
+ * @param {\} s 
+ */
+export const formatterFileSize = (s) => {
+  s = parseInt(s)
+  if (s < 1024) {
+      return s + 'B'
+  } else if(s < 1024 * 1024) {
+      return (s / 1024).toFixed(1) + 'K'
+  } else if (s < 1024 * 1024 * 1024) {
+      return (s / (1024 * 1024)).toFixed(1) + 'M'
+  } else {
+      return (s / (1024 * 1024 * 1024)).toFixed(1) + 'G'
+  }
+}

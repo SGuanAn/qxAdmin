@@ -1,14 +1,21 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text"></div>
+    <v-header />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import VHeader from './module/header'
 
 export default {
   name: 'Dashboard',
+  components:{ VHeader },
+  data() {
+    return{}
+  },
+  created(){
+  },
   computed: {
     ...mapGetters([
       'roles'
@@ -21,10 +28,6 @@ export default {
 .dashboard {
   &-container {
     margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
   }
 }
 </style>

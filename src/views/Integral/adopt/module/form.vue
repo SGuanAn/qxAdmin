@@ -335,7 +335,7 @@
 import jsonData from '@/json/Nation.json'
 import elDragDialog from '@/directive/el-drag-dialog'
 import Datas from '@/json/data.json'
-// import { addData, editData } from '@/api/Alldata'
+import { addData, editData } from '@/api/Alldata'
 import { parseTime } from '@/utils/index'
 import VDistpicker from 'v-distpicker'
 import { mapGetters } from 'vuex'
@@ -349,6 +349,13 @@ export default {
                 callback(new Error('请输入电话号码'))
             } else if (!/^1[3|4|5|7|8][0-9]\d{8}$/.test(value)) {
                 callback(new Error('请输入正确的11位手机号码'))
+            } else {
+                callback()
+            }
+        }
+        const validateIDCard = (rule, value, callback) => {
+            if (value && (!(/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/).test(value) || (value.length !== 15 && value.length !== 18))) {
+                callback(new Error('身份证号码不规范'))
             } else {
                 callback()
             }
@@ -412,22 +419,35 @@ export default {
                 Gender: [
                     { required: true, message: '不能为空'}
                 ],
-                age: [
-                    { required: true, message: '不能为空'}
-                ],
                 IDNumber: [
-                    { required: true, message: '不能为空'}
-                ],
-                BirthDate: [
-                    { required: true, message: '不能为空'}
-                ],
-                Nation: [
-                    { required: true, message: '不能为空'}
+                    { required: true,  message: '不能为空', trigger: 'blur' },
+                    { validator: validateIDCard, trigger: 'blur' }
                 ],
                 Marriage: [
                     { required: true, message: '不能为空'}
                 ],
                 phone: [
+                    { required: true, trigger: 'blur', validator: validPhone }
+                ],
+                Audit: [
+                    { required: true, message: '不能为空'}
+                ],
+                Sdeclare: [
+                    { required: true, message: '不能为空'}
+                ],
+                payment: [
+                    { required: true, message: '不能为空'}
+                ],
+                Entrance: [
+                    { required: true, message: '不能为空'}
+                ],
+                Pay: [
+                    { required: true, message: '不能为空'}
+                ],
+                Total: [
+                    { required: true, message: '不能为空'}
+                ],
+                Immigration:[
                     { required: true, message: '不能为空'}
                 ]
             },
@@ -469,7 +489,6 @@ export default {
         const time = Date.now()
         this.form.createTime = parseTime(time)
         this.form.Founder = this.user.usernames
-        this.form.belong = '无'
         this.$refs['form'].validate((value) => {
             if(value){
                 if (this.isAdd) {
@@ -481,6 +500,7 @@ export default {
         })
     },
     doAdd(){
+        this.form.belong = '无'
         addData(this.form).then(res => {
             if(res.code === 200) {
                 this.loading = true
@@ -532,6 +552,12 @@ export default {
   watch:{
       Unpaid(val){
           this.form.Unpaid = val
+      },
+      BirthDate(val){
+          this.form.BirthDate = val
+      },
+      MyAge(val){
+          this.form.age = val
       }
   },
   computed:{
@@ -540,6 +566,19 @@ export default {
         ]),
         Unpaid:function() {
             return this.form.Unpaid = this.form.Total - this.form.Pay
+        },
+        BirthDate:function() {
+            return this.form.IDNumber.substring(6, 10) + "-" + this.form.IDNumber.substring(10, 12) + "-" + this.form.IDNumber.substring(12, 14);
+        },
+        MyAge:function() {
+            var myDate = new Date(); 
+            var month = myDate.getMonth() + 1; 
+            var day = myDate.getDate(); 
+            var age = myDate.getFullYear() - this.form.IDNumber.substring(6, 10) - 1;
+            if (this.form.IDNumber.substring(10, 12) < month || this.form.IDNumber.substring(10, 12) == month && this.form.IDNumber.substring(12, 14) <= day) { 
+                age++; 
+            }
+            return age;
         }
     }
 }

@@ -1,1 +1,1 @@
-基于VUE +element+node+mysql写的录单系统
+基于VUE +element写的针对入户学历的信息管理系统

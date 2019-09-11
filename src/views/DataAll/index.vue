@@ -14,7 +14,12 @@
             <el-table-column prop="Entrance" label="申报窗口" />
             <el-table-column prop="belong" label="归属用户" />
             <el-table-column prop="Founder" label="创建人" />
-            <el-table-column :show-overflow-tooltip="true" prop="createTime" label="录入时间">
+            <el-table-column :show-overflow-tooltip="true" prop="updateTime" label="操作时间">
+                <template slot-scope="scope">
+                    <span>{{ parseTime(scope.row.updateTime) }}</span>
+                </template>
+            </el-table-column>
+            <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建时间">
                 <template slot-scope="scope">
                     <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>
@@ -68,9 +73,7 @@ export default {
             getList(this.listQuery).then(res => {
                 this.tableData = res.data
                 this.total = res.total
-                setTimeout(() => {
-                    this.listLoading = false
-                }, 500)
+                this.listLoading = false
             })
         },
         handleSelectionChange(row){

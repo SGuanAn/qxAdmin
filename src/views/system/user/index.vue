@@ -4,12 +4,22 @@
     <v-search :keyword.sync='searchVal' @searchVal='getUserList' />
     <!--表格渲染-->
     <el-table ref="userList" :data="userList" fit v-loading="listLoading" style="width: 100%;margin-top:30px;" >
-      <el-table-column type="index" label="序号" align="center" width="100px"/>
-      <el-table-column prop="username" label="用户账号" />
+      <el-table-column type="index" label="序号" width="100px"/>
+      <el-table-column prop="username" label="登录账号" />
       <el-table-column prop="usernames" label="用户姓名" />
-      <el-table-column prop="phone" label="电话" />
-      <el-table-column prop="email" label="邮箱" />
-      <el-table-column prop="introduction" label="描述" />
+      <el-table-column prop="usernames" label="用户角色" >
+        <template slot-scope="scope">
+          <el-tag> {{ scope.row.roleName }} </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="state" label="账号状态">
+        <template slot-scope="scope">
+          <el-tag type="success" v-if="scope.row.state === 1">已激活</el-tag>
+          <el-tag type="info" v-if="scope.row.state === 2">已禁用</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="phone" label="用户电话" />
+      <el-table-column prop="email" label="用户邮箱" />
       <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建日期">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>

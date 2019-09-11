@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { Decrypt, Encrypt } from '@/utils/rsaEncrypt'
 
 const state = {
   token: getToken(),
@@ -31,9 +32,10 @@ const mutations = {
 const actions = {
   // 用户登录
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username, password, code } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      //{ username: username.trim(), password: password, code: code }
+      login({data: Encrypt(userInfo)}).then(response => {
         const data = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)
@@ -48,21 +50,22 @@ const actions = {
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        const data = response.data
-        if (!data) {
-          reject('登录状态已过期！！')
-        }
-        const { usernames, avatar } = data
-        const roles = response.permission
-        if (roles && roles.length > 0) { // 验证返回的菜单是否是一个非空数组
-          commit('SET_ROLES', roles)
+        const data = Decrypt(response.data) // 解密
+        if(data){
+          const { usernames, avatar } = data
+          const roles = Decrypt(response.permission) // 解密
+          if (roles && roles.length > 0) { // 验证返回的菜单是否是一个非空数组
+            commit('SET_ROLES', roles)
+          } else {
+            reject('获取权限失败，请重新登录或联系管理员！！')
+          }
+          commit('SET_USER', data)
+          commit('SET_NAME', usernames)
+          commit('SET_AVATAR', avatar)
+          resolve(response)
         } else {
-          reject('获取权限失败，请重新登录或联系管理员！！')
+          reject('返回用户信息为空！！')
         }
-        commit('SET_USER', data)
-        commit('SET_NAME', usernames)
-        commit('SET_AVATAR', avatar)
-        resolve(response)
       }).catch(error => {
         reject(error)
       })

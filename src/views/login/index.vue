@@ -40,15 +40,33 @@
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
-
+      <!-- 验证码 -->
+      <div class="code_box">
+        <el-form-item prop="code" style="width: 50%; float:left">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input v-model="loginForm.code"
+          auto-complete="off"
+          placeholder="验证码"
+          style="width: 80%"
+          @keyup.enter.native="handleLogin" />
+        </el-form-item>
+        <div class="login-code" style="float:left">
+          <a href="javascript:0;" v-html="svgData" @click="code"></a>
+        </div>
+      </div>
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
+    <div>
+      <p class="foot">© 2019 QIN XUE JIAO YU 1.0 ⋅ 深圳市勤学教育有限公司 ⋅ 粤ICP备17077850号-1</p>
+    </div>
   </div>
 </template>
 
 <script>
-// import { validUsername } from '@/utils/validate'
+import { getCode } from '@/api/Code'
 
 export default {
   name: 'Login',
@@ -70,11 +88,15 @@ export default {
     return {
       loginForm: {
         username: '',
-        password: ''
+        password: '',
+        code:''
       },
+      text:'',
+      svgData:'',
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        code: [{ required: true, trigger: 'blur', message: '验证码不能为空' }]
       },
       loading: false,
       passwordType: 'password',
@@ -89,7 +111,15 @@ export default {
       immediate: true
     }
   },
+  created(){
+    this.code();
+  },
   methods: {
+    code(){
+      getCode().then(res => {
+        this.svgData = res.result
+      })
+    },  
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -106,16 +136,17 @@ export default {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$message({
-              message: '登录成功',
-              type: 'success',
-              duration: 1500,
-              onClose: () => {
-                this.$router.push({ path: this.redirect || '/' })
-              }
-            });
+                message: '登录成功',
+                type: 'success',
+                duration: 1500,
+                onClose: () => {
+                  this.$router.push({ path: this.redirect || '/' })
+                }
+              });
             this.loading = false
           }).catch(() => {
             this.loading = false
+            this.code()
           })
         } else {
           console.log('错误提交！！')
@@ -184,6 +215,16 @@ $light_gray:#eee;
   width: 100%;
   background-color: $bg;
   overflow: hidden;
+  .foot{
+    text-align:center;
+    color:#fff;
+    font-size:12px;
+    font-family: Arial;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 
   .login-form {
     position: relative;
@@ -225,7 +266,12 @@ $light_gray:#eee;
       font-weight: bold;
     }
   }
-
+  .code_box{
+    height: 52px;
+  }
+  .login-code{
+    margin-left: 12%;
+  }
   .show-pwd {
     position: absolute;
     right: 10px;

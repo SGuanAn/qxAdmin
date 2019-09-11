@@ -68,15 +68,19 @@ export default {
             getList(this.listQuery).then(res => {
                 this.tableData = res.data
                 this.total = res.total
-                setTimeout(() => {
-                    this.listLoading = false
-                }, 500)
+                // this.$route.meta.total = res.total
+                this.listLoading = false
             })
         },
         handleSelectionChange(val){
             this.idArr = val
         },
-    }
+    },
+    // watch:{
+    //     $route() {
+    //         this.getAll()
+    //     }
+    // }
 }
 </script>
 

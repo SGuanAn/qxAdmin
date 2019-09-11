@@ -1,11 +1,11 @@
 <template>
-  <el-dialog :visible.sync="dialog" :title="isAdd ? '新增角色' : '编辑角色'" append-to-body width="500px">
+  <el-dialog :visible.sync="dialog" :title="isAdd ? '新增角色' : '编辑角色'" :close-on-click-modal='false' append-to-body width="500px">
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
       <el-form-item label="角色名称" prop="name">
         <el-input v-model="form.name" style="width: 370px;" />
       </el-form-item>
       <el-form-item label="描述信息">
-        <el-input v-model="form.remark" style="width: 370px;" rows="5" type="textarea"/>
+        <el-input v-model="form.remark" style="width: 370px;" rows="5" type="textarea" />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">

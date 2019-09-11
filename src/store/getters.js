@@ -9,6 +9,7 @@ const getters = {
   user: state => state.user.user,
   roles: state => state.user.roles,
   UploadDataApi: state => state.api.UploadDataApi,
+  updateAvatarApi: state => state.api.updateAvatarApi,
   permission_routers: state => state.permission.routes,
   addRouters: state => state.permission.addRouters,
   GET_VAL:state => state.search.keyword,

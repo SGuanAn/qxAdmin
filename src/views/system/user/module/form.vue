@@ -1,17 +1,23 @@
 <template>
   <el-dialog :visible.sync="dialog" :title="isAdd ? '新增用户' : '编辑用户'" append-to-body width="500px">
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-      <el-form-item label="用户账号" prop="username">
+      <el-form-item label="登录账号" prop="username">
         <el-input v-model="form.username" style="width: 300px;" />
       </el-form-item>
       <el-form-item label="用户姓名" prop="usernames">
         <el-input v-model="form.usernames" style="width: 300px;" />
       </el-form-item>
-      <el-form-item label="电话" prop="phone" >
+      <el-form-item label="用户电话" prop="phone" >
         <el-input v-model.number="form.phone" style="width: 300px;" />
       </el-form-item>
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="用户邮箱" prop="email">
         <el-input v-model="form.email" style="width: 300px;" />
+      </el-form-item>
+      <el-form-item label="用户状态" prop="email">
+        <el-radio-group v-model="form.state">
+          <el-radio :label="1">激活</el-radio>
+          <el-radio :label="2">禁用</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="用户权限">
         <el-select v-model="roleId" style="width: 300px;" :closable='true' placeholder="请选择权限" >
@@ -22,9 +28,9 @@
             :value="item.id"/>
         </el-select>
       </el-form-item>
-      <el-form-item label="描述信息">
+      <!-- <el-form-item label="描述信息">
         <el-input v-model="form.introduction" style="width: 300px;" rows="5" type="textarea"/>
-      </el-form-item>
+      </el-form-item> -->
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="text" @click="cancel">取消</el-button>
@@ -71,7 +77,7 @@ export default {
     }
     return {
       loading: false, dialog: false,
-      form: { username: '',usernames: '', introduction: '', avatar:'', name:'', roleId:null, phone: null, email:'' },
+      form: { username: '',usernames: '', introduction: '', avatar:'', name:'', roleId:null, phone: null, email:'',state: 1 },
       roleId:null,
       roleName:[],
       rules: {
@@ -85,6 +91,9 @@ export default {
         email: [
           { required: true, message: '请输入邮箱地址', trigger: 'blur' },
           { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur' }
+        ],
+        roleId:[
+          { required: true, trigger: 'blur', validator: '请选择角色' }
         ],
         phone: [
           { required: true, trigger: 'blur', validator: validPhone }

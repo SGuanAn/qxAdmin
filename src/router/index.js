@@ -43,7 +43,7 @@ export const constantRoutes = [
         meta: {
           title: '系统管理',
           icon: 'system',
-          roles: ['ADMIN', 'SYSTEM_ALL', 'ROLE_MENU', 'USER_MENU']
+          roles: [ 'SYSTEM_ALL', 'ROLE_MENU', 'USER_MENU']
         },
         children: [
           {
@@ -53,7 +53,7 @@ export const constantRoutes = [
             meta: {
               title: '角色管理',
               icon: 'permission',
-              roles: ['ADMIN', 'ROLE_MENU']
+              roles: [ 'ROLE_MENU']
             }
           },
           {
@@ -63,7 +63,7 @@ export const constantRoutes = [
             meta: {
               title: '用户管理',
               icon: 'peoples',
-              roles: ['ADMIN', 'USER_MENU']
+              roles: ['USER_MENU']
             }
           },
         ]
@@ -98,7 +98,7 @@ export const constantRoutes = [
             meta: {
               title: '文件管理',
               icon: 'file',
-              roles: ['ADMIN', 'FILE_MENU']
+              roles: [ 'FILE_MENU']
             }
           }
         ]
@@ -106,16 +106,16 @@ export const constantRoutes = [
       {
         path: '/DataAll',
         component: Layout,
-        redirect: '/DataAll',
+        redirect: '/',
         children: [
           {
-            path: 'DataAll',
+            path: 'index',
             component: () => import('@/views/DataAll/index'),
             name: 'DataAll',
             meta: {
               title: '全部数据',
               icon: 'AllData',
-              roles: ['ADMIN', 'DATAALL_MENU']
+              roles: [ 'DATAALL_MENU']
             }
           }
         ]
@@ -123,16 +123,35 @@ export const constantRoutes = [
       {
         path: '/NewData',
         component: Layout,
-        redirect: '/NewData',
+        redirect: '/',
         children: [
           {
-            path: 'NewData',
+            path: 'index',
             component: () => import('@/views/NewData/index'),
             name: 'NewData',
             meta: {
+              total: 0,
               title: '领取数据',
               icon: 'NewData',
-              roles: ['ADMIN', 'NEWDATA_MENU']
+              roles: ['NEWDATA_MENU']
+            }
+          }
+        ]
+      },
+      // 学历录入
+      {
+        path: '/Lnput',
+        component: Layout,
+        redirect: '/Lnput',
+        children: [
+          {
+            path: 'learn_lnput',
+            component: () => import('@/views/learnForm/index'),
+            name: 'learnForm',
+            meta: {
+              title: '信息录入',
+              icon: 'Customer_input',
+              roles: [ 'LERAN_LNPUT_MENU' ]
             }
           }
         ]
@@ -146,7 +165,7 @@ export const constantRoutes = [
         meta: {
           title: '标准制',
           icon: 'standard',
-          roles: ['ADMIN', 'STANDARD_MENU']
+          roles: [ 'STANDARD_MENU']
         },
         children: [
           {
@@ -154,9 +173,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/waitFor/index'),
             name: 'waitFor',
             meta: {
+              total: 0,
               title: '待录客户',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_WAITFOR_MENU']
+              roles: [ 'STANDARD_WAITFOR_MENU']
             }
           },
           {
@@ -164,9 +184,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/check/index'),
             name: 'check',
             meta: {
+              total: 0,
               title: '核对资料',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_CHECK_MENU']
+              roles: [ 'STANDARD_CHECK_MENU']
             }
           },
           {
@@ -174,9 +195,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/inspect/index'),
             name: 'inspect',
             meta: {
+              total: 0,
               title: '已体检',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_INSPECT_MENU']
+              roles: [ 'STANDARD_INSPECT_MENU']
             }
           },
           {
@@ -184,9 +206,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/examine/index'),
             name: 'examine',
             meta: {
+              total: 0,
               title: '一审',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_EXAMINE_MENU']
+              roles: [ 'STANDARD_EXAMINE_MENU']
             }
           },
           {
@@ -194,9 +217,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/adopt/index'),
             name: 'adopt',
             meta: {
+              total: 0,
               title: '审批通过',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_ADOPT_MENU']
+              roles: [ 'STANDARD_ADOPT_MENU']
             }
           },
           {
@@ -204,9 +228,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/migration/index'),
             name: 'migration',
             meta: {
+              total: 0,
               title: '办理准迁证',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_MIGRATION_MENU']
+              roles: [ 'STANDARD_MIGRATION_MENU']
             }
           },
           {
@@ -214,9 +239,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/transfer/index'),
             name: 'transfer',
             meta: {
+              total: 0,
               title: '办理迁移证',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_TRANSFER_MENU']
+              roles: [ 'STANDARD_TRANSFER_MENU']
             }
           },
           {
@@ -224,9 +250,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/CustomerID/index'),
             name: 'CustomerID',
             meta: {
+              total:0,
               title: '办理身份证',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_ID_MENU']
+              roles: [ 'STANDARD_ID_MENU']
             }
           },
           {
@@ -234,9 +261,10 @@ export const constantRoutes = [
             component: () => import('@/views/standard/End/index'),
             name: 'End',
             meta: {
+              total: 0,
               title: '已办理完结',
               icon: 'student',
-              roles: ['ADMIN', 'STANDARD_END_MENU']
+              roles: [ 'STANDARD_END_MENU']
             }
           }
         ]
@@ -250,7 +278,7 @@ export const constantRoutes = [
         meta: {
           title: '积分制',
           icon: 'Integral',
-          roles: ['ADMIN' , 'INTEGRAL_MENU']
+          roles: [ 'INTEGRAL_MENU']
         },
         children: [
           {
@@ -258,9 +286,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/waitFor/index'),
             name: 'Integral_waitFor',
             meta: {
+              total: 0,
               title: '待录客户',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_WAITFOR_MENU']
+              roles: [ 'INTEGRAL_WAITFOR_MENU']
             }
           },
           {
@@ -268,9 +297,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/check/index'),
             name: 'Integral_check',
             meta: {
+              total: 0,
               title: '核对资料',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_CHECK_MENU']
+              roles: [ 'INTEGRAL_CHECK_MENU']
             }
           },
           {
@@ -278,9 +308,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/inspect/index'),
             name: 'Integral_inspect',
             meta: {
+              total: 0,
               title: '已体检',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_INSPECT_MENU']
+              roles: [ 'INTEGRAL_INSPECT_MENU']
             }
           },
           {
@@ -288,9 +319,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/examine/index'),
             name: 'Integral_examine',
             meta: {
+              total: 0,
               title: '一审',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_EXAMINE_MENU']
+              roles: [ 'INTEGRAL_EXAMINE_MENU']
             }
           },
           {
@@ -298,9 +330,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/adopt/index'),
             name: 'Integral_adopt',
             meta: {
+              total: 0,
               title: '审批通过',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_ADOPT_MENU']
+              roles: [ 'INTEGRAL_ADOPT_MENU']
             }
           },
           {
@@ -308,9 +341,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/migration/index'),
             name: 'Integral_migration',
             meta: {
+              total: 0,
               title: '办理准迁证',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_MIGRATION_MENU']
+              roles: [ 'INTEGRAL_MIGRATION_MENU']
             }
           },
           {
@@ -318,9 +352,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/transfer/index'),
             name: 'Integral_transfer',
             meta: {
+              total: 0,
               title: '办理迁移证',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_TRANSFER_MENU']
+              roles: [ 'INTEGRAL_TRANSFER_MENU']
             }
           },
           {
@@ -328,9 +363,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/CustomerID/index'),
             name: 'Integral_CustomerID',
             meta: {
+              total: 0,
               title: '办理身份证',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_ID_MENU']
+              roles: [ 'INTEGRAL_ID_MENU']
             }
           },
           {
@@ -338,9 +374,10 @@ export const constantRoutes = [
             component: () => import('@/views/Integral/End/index'),
             name: 'Integral_End',
             meta: {
+              total: 0,
               title: '已办理完结',
               icon: 'student',
-              roles: ['ADMIN', 'INTEGRAL_END_MENU']
+              roles: [ 'INTEGRAL_END_MENU']
             }
           }
         ]
@@ -352,9 +389,10 @@ export const constantRoutes = [
         redirect: '/Overseas',
         alwaysShow: true, // 将始终显示根菜单
         meta: {
+          total:0,
           title: '留学生',
           icon: 'Overseas',
-          roles: ['ADMIN' , 'OCERSEAS_MENU']
+          roles: [ 'OCERSEAS_MENU']
         },
         children: [
           {
@@ -362,9 +400,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/waitFor/index'),
             name: 'Overseas_waitFor',
             meta: {
+              total: 0,
               title: '待录客户',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_WAITFOR_MENU']
+              roles: [ 'OCERSEAS_WAITFOR_MENU']
             }
           },
           {
@@ -372,9 +411,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/check/index'),
             name: 'Overseas_check',
             meta: {
+              total: 0,
               title: '核对资料',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_CHECK_MENU']
+              roles: [ 'OCERSEAS_CHECK_MENU']
             }
           },
           {
@@ -382,9 +422,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/quali/index'),
             name: 'Overseas_inspect',
             meta: {
+              total: 0,
               title: '资格认证',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_QUALI_MENU']
+              roles: [ 'OCERSEAS_QUALI_MENU']
             }
           },
           {
@@ -392,9 +433,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/examine/index'),
             name: 'Overseas_examine',
             meta: {
+              total: 0,
               title: '一审',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_EXAMINE_MENU']
+              roles: [ 'OCERSEAS_EXAMINE_MENU']
             }
           },
           {
@@ -402,9 +444,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/adopt/index'),
             name: 'Overseas_adopt',
             meta: {
+              total: 0,
               title: '审批通过',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_ADOPT_MENU']
+              roles: [ 'OCERSEAS_ADOPT_MENU']
             }
           },
           {
@@ -412,9 +455,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/migration/index'),
             name: 'Overseas_migration',
             meta: {
+              total: 0,
               title: '办理准迁证',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_MIGRATION_MENU']
+              roles: [ 'OCERSEAS_MIGRATION_MENU']
             }
           },
           {
@@ -422,9 +466,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/transfer/index'),
             name: 'Overseas_transfer',
             meta: {
+              total: 0,
               title: '办理迁移证',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_TRANSFER_MENU']
+              roles: [ 'OCERSEAS_TRANSFER_MENU']
             }
           },
           {
@@ -432,9 +477,10 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/CustomerID/index'),
             name: 'Overseas_CustomerID',
             meta: {
+              total: 0,
               title: '办理身份证',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_ID_MENU']
+              roles: [ 'OCERSEAS_ID_MENU']
             }
           },
           {
@@ -442,15 +488,17 @@ export const constantRoutes = [
             component: () => import('@/views/Overseas/End/index'),
             name: 'Overseas_End',
             meta: {
+              total: 0,
               title: '已办理完结',
               icon: 'student',
-              roles: ['ADMIN', 'OCERSEAS_END_MENU']
+              roles: [ 'OCERSEAS_END_MENU']
             }
           }
         ]
       },
       //应届生
       {
+        total:0,
         path: '/Freshmen',
         component: Layout,
         redirect: '/Freshmen',
@@ -458,7 +506,7 @@ export const constantRoutes = [
         meta: {
           title: '应届生',
           icon: 'Freshmen',
-          roles: ['ADMIN' , 'FRESHMEN_MENU']
+          roles: [ 'FRESHMEN_MENU']
         },
         children: [
           {
@@ -466,9 +514,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/waitFor/index'),
             name: 'Freshmen_waitFor',
             meta: {
+              total: 0,
               title: '待录客户',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_WAITFOR_MENU']
+              roles: [ 'FRESHMEN_WAITFOR_MENU']
             }
           },
           {
@@ -476,9 +525,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/check/index'),
             name: 'Freshmen_check',
             meta: {
+              total: 0,
               title: '核对资料',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_CHECK_MENU']
+              roles: [ 'FRESHMEN_CHECK_MENU']
             }
           },
           {
@@ -486,9 +536,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/report/index'),
             name: 'Freshmen_inspect',
             meta: {
+              total: 0,
               title: '改派报到证中',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_REPORT_MENU']
+              roles: [ 'FRESHMEN_REPORT_MENU']
             }
           },
           {
@@ -496,9 +547,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/online_report/index'),
             name: 'Freshmen_online',
             meta: {
+              total: 0,
               title: '网上报道',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_ONLINE_MENU']
+              roles: [ 'FRESHMEN_ONLINE_MENU']
             }
           },
           {
@@ -506,9 +558,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/migration/index'),
             name: 'Freshmen_migration',
             meta: {
+              total: 0,
               title: '办理准迁证',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_MIGRATION_MENU']
+              roles: [ 'FRESHMEN_MIGRATION_MENU']
             }
           },
           {
@@ -516,9 +569,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/transfer/index'),
             name: 'Freshmen_transfer',
             meta: {
+              total: 0,
               title: '办理迁移证',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_TRANSFER_MENU']
+              roles: [ 'FRESHMEN_TRANSFER_MENU']
             }
           },
           {
@@ -526,9 +580,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/CustomerID/index'),
             name: 'Freshmen_CustomerID',
             meta: {
+              total: 0,
               title: '办理身份证',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_ID_MENU']
+              roles: [ 'FRESHMEN_ID_MENU']
             }
           },
           {
@@ -536,9 +591,10 @@ export const constantRoutes = [
             component: () => import('@/views/Freshmen/End/index'),
             name: 'Freshmen_End',
             meta: {
+              total:0,
               title: '已办理完结',
               icon: 'student',
-              roles: ['ADMIN', 'FRESHMEN_END_MENU']
+              roles: [ 'FRESHMEN_END_MENU']
             }
           }
         ]
@@ -558,5 +614,5 @@ export const constantRoutes = [
     const newRouter = createRouter()
     router.matcher = newRouter.matcher // 重置路由器
   }
-  
+
   export default router

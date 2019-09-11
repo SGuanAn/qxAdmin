@@ -26,10 +26,9 @@ export function NewData() {
 }
 
 //数据详情
-export function Details(query) {
+export function Details() {
     return request({
       url: '/dashboard/details',
       method: 'get',
-      params: query
     })
 }

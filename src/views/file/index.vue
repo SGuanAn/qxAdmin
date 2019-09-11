@@ -61,9 +61,7 @@ export default {
       this.listLoading = true
       getAll({path: this.path}).then(res => {
         this.tableData = res
-        setTimeout(() => {
-          this.listLoading = false
-        }, 500)
+        this.listLoading = false
       })
     },
     getFileList(path){

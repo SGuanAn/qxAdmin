@@ -14,7 +14,7 @@
                 </div>
             </el-col>
             <el-col :span="5">
-                <div class="profile-state pointer" @click="$refs.drawers.drawer = true">
+                <div class="profile-state pointer">
                     <div class="icon-box">
                         <span class="icon-bg icon-bg-2">
                             <svg-icon icon-class="My_data" />
@@ -50,17 +50,14 @@
                 </div>
             </el-col>
         </el-row>
-        <drawer ref="drawers" />
     </div>
 </template>
 
 <script>
 import { getAllUsers } from '@/api/user'
-import drawer from './drawer'
 import { MyData, Label, NewData } from '@/api/dashboard'
 import { mapGetters } from 'vuex'
 export default {
-    components:{ drawer },
     data(){
         return{
             usersTotal:0,

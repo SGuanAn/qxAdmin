@@ -5,6 +5,7 @@ import NProgress from 'nprogress' // 进度条
 import 'nprogress/nprogress.css' // 进度条样式
 import { getToken } from '@/utils/auth' // 从cookie获取令牌
 import getPageTitle from '@/utils/get-page-title'
+import { Decrypt } from '@/utils/rsaEncrypt'
 
 NProgress.configure({ showSpinner: false }) // 进程配置
 
@@ -35,10 +36,9 @@ router.beforeEach(async(to, from, next) => {
         try {
           // 获取用户信息
           const { permission } = await store.dispatch('user/getInfo')
-          
           // 基于角色生成可访问的路由映射
-          const accessRoutes = await store.dispatch('permission/generateRoutes', permission)
-
+          const accessRoutes = await store.dispatch('permission/generateRoutes', Decrypt(permission))
+          
           // 动态添加可访问的路由
           router.addRoutes(accessRoutes)
           

@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { Message, Notification, MessageBox } from 'element-ui'
-import store from '@/store'
+import store from '@/store/index'
 import { getToken } from '@/utils/auth'
+import { encrypt } from '@/utils/rsaEncrypt'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   withCredentials: true, // 跨域请求时发送cookie
-  timeout: 5000 // 请求超时
+  timeout: 8000 // 请求超时
 })
 
 // 请求拦截器
@@ -16,6 +17,7 @@ service.interceptors.request.use(
     if (store.getters.token) {
       config.headers['Token'] = getToken()
     }
+    // config.data = encrypt(config.data)
     return config
   },
   error => {
@@ -29,26 +31,43 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {
     const res = response.data
-    if(res.code === 50014){
-      MessageBox.confirm(
-        '登录状态已过期，您可以继续留在该页面，或者重新登录',
-        '系统提示',
-        {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).then(() => {
-        store.dispatch('user/logout').then(() => {
-          location.reload() // 重新实例化vue-router对象 避免bug
+
+    // 所有错误信息
+    if (res.code !== 200) {
+
+      // 处理后台返回的一些警告信息（根据后台可删除）
+      if(res.code !== -200 && res.code !== 50014) {
+        return res
+      }
+
+      if(res.code === -200) {
+        Notification.error({
+          title: res.msg
         })
-      })
-    }
-    if (res.code === -20000) {
-      Notification.error({
-        title: res.message
-      })
-      return Promise.reject(res.message || 'error')
+      }
+
+      const hasRoles = store.getters.roles && store.getters.roles.length > 0 // 用户是否已登录拉取信息
+      // token 过期处理（在登录页不执行）
+      if(res.code === 50014 && hasRoles)
+      {
+        MessageBox.confirm(
+          '登录状态已过期，您可以继续留在该页面，或者重新登录',
+          '系统提示',
+          {
+            closeOnClickModal: false,
+            confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }
+        ).then(() => {
+          store.dispatch('user/resetToken').then(() => {
+            location.reload() // 重新实例化vue-router对象 避免bug
+          })
+        })
+      }
+
+      return Promise.reject(res.msg || 'error')
+
     } else {
       return res
     }
@@ -72,6 +91,7 @@ service.interceptors.response.use(
         })
         return Promise.reject(error)
       }
+      
       if (error.toString().indexOf('Error: Internal Server Error')) {
         Notification.error({
           title: '内部服务器错误，请及时联系管理员或技术人员',

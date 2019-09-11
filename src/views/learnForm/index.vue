@@ -6,28 +6,24 @@
         <el-table ref="tableData" tooltip-effect="dark" :data="tableData" border v-loading="listLoading" style="margin-top:30px;" @selection-change="handleSelectionChange" >
             <el-table-column type="selection" width="30" />
             <el-table-column prop="name" label="姓名" />
-            <el-table-column prop="phone" label="手机号码" />
             <el-table-column prop="IDNumber" label="证件号" width="180" />
-            <el-table-column prop="Sdeclare" label="申报方式" />
-            <el-table-column prop="Audit" label="审核方式" />
-            <el-table-column prop="progress" label="工作进度" />
-            <el-table-column prop="Entrance" label="申报窗口" />
-            <el-table-column prop="belong" label="归属用户" />
-            <el-table-column prop="Founder" label="创建人" />
-            <el-table-column :show-overflow-tooltip="true" prop="updateTime" label="操作时间">
-                <template slot-scope="scope">
-                    <span>{{ parseTime(scope.row.updateTime) }}</span>
-                </template>
-            </el-table-column>
-            <el-table-column :show-overflow-tooltip="true" prop="createTime" label="创建时间">
+            <el-table-column prop="promote" label="层次" />
+            <el-table-column prop="Enrolment" label="报读院校" />
+            <el-table-column prop="Types_type" label="报读类型" />
+            <el-table-column prop="major_enrollment" label="报读专业" />
+            <el-table-column prop="batch" label="批次" />
+            <el-table-column prop="Total" label="总学费" />
+            <el-table-column prop="Unpaid" label="未缴" />
+            <el-table-column prop="Payment_status" label="学费情况" />
+            <el-table-column :show-overflow-tooltip="true" prop="createTime" label="录入时间">
                 <template slot-scope="scope">
                     <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="操作" width="200px;">
                 <template slot-scope="scope">
-                    <see v-permission="['ADMIN', 'BUSINESS_SEE']" :data="scope.row" :sup_this="sup_this" />
-                    <edit v-permission="['ADMIN', 'BUSINESS_EDIT']" :data="scope.row" :sup_this="sup_this" />
+                    <see v-permission="['ADMIN', 'LEARN_FORM_SEE']" :data="scope.row" :sup_this="sup_this" />
+                    <edit v-permission="['ADMIN', 'LEARN_FORM_EDIT']" :data="scope.row" :sup_this="sup_this" />
                 </template>
             </el-table-column>
         </el-table>
@@ -39,8 +35,7 @@
 <script>
 import VHeader from './module/header'
 import permission from '@/directive/permission/index' // 权限判断指令
-import { InspectList } from '@/api/standard'
-import { mapGetters } from 'vuex'
+import { getList } from '@/api/learnForm'
 import { parseTime, deleteEmptyProperty } from '@/utils/index'
 import Pagination from '@/components/Pagination'
 import edit from './module/edit'
@@ -53,17 +48,17 @@ export default {
             listLoading: false,
             sup_this: this,
             tableData: [],
-            idArr:[],
             searchVal:{},
-            total: 1,
+            idArr:[],
+            total: 0,
             listQuery: {
                 page: 1,
-                limit: 20,
+                limit: 20
             },
         }
     },
     created(){
-        this.getAll()
+        // this.getAll()
     },
     methods:{
         parseTime,
@@ -71,8 +66,7 @@ export default {
         getAll(){
             this.listLoading = true
             this.listQuery.searchVal = deleteEmptyProperty(this.searchVal)
-            this.listQuery.username = this.user.usernames
-            InspectList(this.listQuery).then(res => {
+            getList(this.listQuery).then(res => {
                 this.tableData = res.data
                 this.total = res.total
                 setTimeout(() => {
@@ -80,14 +74,9 @@ export default {
                 }, 500)
             })
         },
-        handleSelectionChange(val){
-            this.idArr = val
+        handleSelectionChange(row){
+            this.idArr = row
         },
-    },
-    computed:{
-        ...mapGetters([
-        'user'
-      ])
     },
 }
 </script>

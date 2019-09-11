@@ -1,12 +1,12 @@
 <template>
     <div class="dialo">
-        <el-dialog v-el-drag-dialog :visible.sync="dialog" :close-on-click-modal='false' :title="isAdd ? '添加客户' : '客户信息'" append-to-body>
+        <el-dialog v-el-drag-dialog :visible.sync="dialog" :close-on-click-modal='false' :title="isAdd ? '添加学员' : '学员信息'" append-to-body>
             <el-form ref="form" :rules="rules" :model="form" size="small">
                 <div style="margin-left: 10px; margin-top: 10px; margin-right: 10px; margin-bottom:20px;">
                     <table border="1" bordercolor="#e1dbdb" style="border-collapse:collapse;" class="form  table-hover">
                         <tbody>
                             <tr>
-                                <td colspan="8" style="text-align:center;" class="topTitle">基本信息</td>
+                                <td colspan="8" style="text-align:center;" class="topTitle">学员信息</td>
                             </tr>
                             <tr>
                                 <td width="130" class="tabletitle tdTitle"><span style="color:red; margin-right: 5px;">*</span>姓名：</td>
@@ -15,7 +15,7 @@
                                         <el-input v-model="form.name" clearable :disabled='disabled' />
                                     </el-form-item>
                                 </td>
-                                <td width="130" class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>性别：</td>
+                                <td width="130" class="tabletitle tdTitle">性别：</td>
                                 <td width="190" class="formValue">
                                     <el-form-item prop="Gender">
                                         <el-select v-model="form.Gender" placeholder="==请选择==" clearable :disabled='disabled' >
@@ -49,7 +49,7 @@
                                         <el-date-picker v-model="form.BirthDate" type="date" placeholder="选择日期" :disabled='disabled' />
                                     </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>民族：</td>
+                                <td class="tabletitle tdTitle">民族：</td>
                                 <td class="formValue">
                                     <el-form-item prop="Nation">
                                         <el-select v-model="form.Nation" placeholder="==请选择==" clearable :disabled='disabled' >
@@ -63,7 +63,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>婚姻状况：</td>
+                                <td class="tabletitle tdTitle">婚姻状况：</td>
                                 <td class="formValue">
                                     <el-form-item prop="Marriage">
                                         <el-select v-model="form.Marriage" placeholder="==请选择==" clearable :disabled='disabled' >
@@ -81,7 +81,7 @@
                                        <el-input v-model="form.phone" clearable :disabled='disabled' />
                                    </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>职业：</td>
+                                <td class="tabletitle tdTitle">职业：</td>
                                 <td class="formValue">
                                     <el-form-item prop="Occupation">
                                         <el-select v-model="form.Occupation" placeholder="==请选择==" clearable :disabled='disabled' >
@@ -95,64 +95,57 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>户口所在地：</td>
-                                <td class="formValue" colspan="3">
-                                   <el-form-item prop="HouseholdCity">
-                                        <v-distpicker
-                                        :placeholders="placeholders"
-                                        @selected="onSelected"
-                                        class="City"
-                                        :disabled='disabled' />
+                                <td class="tabletitle tdTitle">户籍：</td>
+                                <td class="formValue">
+                                   <el-form-item prop="register">
+                                       <el-input v-model="form.register" clearable :disabled='disabled' />
                                    </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>详细地址：</td>
+                                <td class="tabletitle tdTitle">政治面貌：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="detailed">
-                                       <el-input v-model="form.detailed" clearable :disabled='disabled' />
+                                   <el-form-item prop="Political">
+                                       <el-input v-model="form.Political" clearable :disabled='disabled' />
                                    </el-form-item>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td colspan="8" style="text-align:center;" class="topTitle">其他信息</td>
-                            </tr>
-                            <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>学历：</td>
+                                <td class="tabletitle tdTitle">E-mail：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="MaritalStatus">
-                                        <el-select v-model="form.learn" placeholder="==请选择==" clearable :disabled='disabled' >
-                                            <el-option
-                                                v-for="item in learn"
-                                                :key="item.name"
-                                                :label="item.name"
-                                                :value="item.name" />
-                                        </el-select>
-                                    </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">毕业学校：</td>
-                                <td class="formValue">
-                                    <el-form-item prop="graduation">
-                                        <el-input v-model="form.graduation" clearable :disabled='disabled' />
-                                    </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">现工作单位：</td>
-                                <td class="formValue" colspan="2">
-                                   <el-form-item prop="Company">
-                                       <el-input v-model="form.Company" clearable :disabled='disabled' />
+                                   <el-form-item prop="mail">
+                                       <el-input v-model="form.mail" clearable :disabled='disabled' />
                                    </el-form-item>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle">专业：</td>
+                                <td class="tabletitle tdTitle">报名日期：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="major">
-                                        <el-input v-model="form.major" clearable :disabled='disabled' />
+                                    <el-form-item prop="signTime">
+                                        <el-date-picker v-model="form.signTime" type="date" placeholder="选择日期" :disabled='disabled' />
                                     </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>现单位社保数：</td>
+                                <td class="tabletitle tdTitle">学员账户：</td>
                                 <td class="formValue">
-                                   <el-form-item prop="social">
-                                       <el-input v-model="form.social" clearable :disabled='disabled' />
-                                   </el-form-item>
+                                    <el-form-item prop="student_account">
+                                        <el-input v-model="form.student_account" clearable :disabled='disabled' />
+                                    </el-form-item>
+                                </td>
+                                <td class="tabletitle tdTitle">学员密码：</td>
+                                <td class="formValue">
+                                    <el-form-item prop="student_password">
+                                        <el-input v-model="form.student_password" clearable :disabled='disabled' />
+                                    </el-form-item>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="tabletitle tdTitle">招生老师：</td>
+                                <td class="formValue">
+                                    <el-form-item prop="recruit_teacher">
+                                        <el-input v-model="form.recruit_teacher" clearable :disabled='disabled' />
+                                    </el-form-item>
+                                </td>
+                                <td class="tabletitle tdTitle">接待老师：</td>
+                                <td class="formValue">
+                                    <el-form-item prop="reception_teacher">
+                                        <el-input v-model="form.reception_teacher" clearable :disabled='disabled' />
+                                    </el-form-item>
                                 </td>
                                 <td class="tabletitle tdTitle">通讯地址：</td>
                                 <td class="formValue" colspan="2">
@@ -162,48 +155,10 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle">小孩随迁数：</td>
-                                <td class="formValue">
-                                    <el-form-item prop="Children">
-                                        <el-select v-model="form.Children" placeholder="==请选择==" clearable :disabled='disabled' >
-                                            <el-option
-                                            v-for="item in ChildrenData"
-                                            :key="item.name"
-                                            :label="item.name"
-                                            :value="item.name"/>
-                                        </el-select>
-                                    </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">人保账号：</td>
-                                <td class="formValue">
-                                    <el-form-item prop="Account">
-                                        <el-input v-model="form.Account" clearable :disabled='disabled' />
-                                    </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">人保密码：</td>
+                                <td class="tabletitle tdTitle">紧急联系人：</td>
                                 <td class="formValue" colspan="2">
-                                    <el-form-item prop="AccountPassword">
-                                        <el-input v-model="form.AccountPassword" clearable :disabled='disabled' />
-                                    </el-form-item>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="tabletitle tdTitle">E-mail：</td>
-                                <td class="formValue">
-                                   <el-form-item prop="email">
-                                       <el-input v-model="form.email" clearable :disabled='disabled' />
-                                   </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">学信网账号：</td>
-                                <td class="formValue">
-                                    <el-form-item prop="XueXin">
-                                        <el-input v-model="form.XueXin" clearable :disabled='disabled' />
-                                    </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">学信网密码：</td>
-                                <td class="formValue" colspan="2">
-                                    <el-form-item prop="XueXinPassword">
-                                        <el-input v-model="form.XueXinPassword" clearable :disabled='disabled' />
+                                    <el-form-item prop="emergency_contact">
+                                        <el-input v-model="form.emergency_contact" clearable :disabled='disabled' />
                                     </el-form-item>
                                 </td>
                             </tr>
@@ -212,13 +167,13 @@
                                 <td colspan="4" style="text-align:center;" class="topTitle">备注</td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>总费用：</td>
+                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>总学费：</td>
                                 <td class="formValue">
                                    <el-form-item prop="Total">
                                        <el-input v-model="form.Total" :disabled='disabled' />
                                    </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>来源：</td>
+                                <td class="tabletitle tdTitle">来源：</td>
                                 <td class="formValue">
                                     <el-form-item prop="source">
                                         <el-select v-model="form.source" placeholder="==请选择==" clearable :disabled='disabled' >
@@ -230,29 +185,43 @@
                                         </el-select>
                                     </el-form-item>
                                 </td>
-                                <td rowspan="5" colspan="3">
+                                <td rowspan="6" colspan="3">
                                     <el-form-item prop="Remarks">
                                        <el-input type="textarea" v-model="form.Remarks" :disabled='disabled' />
                                     </el-form-item>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>已缴纳：</td>
+                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>第一年学费：</td>
                                 <td class="formValue">
-                                   <el-form-item prop="Pay">
-                                       <el-input v-model="form.Pay" :disabled='disabled' />
+                                   <el-form-item prop="one_Tuition">
+                                       <el-input v-model="form.one_Tuition" :disabled='disabled' />
                                    </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>审核方式：</td>
+                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>层次：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="Audit">
-                                        <el-select v-model="form.Audit" placeholder="==请选择==" clearable :disabled='disabled' >
+                                    <el-form-item prop="promote">
+                                        <el-select v-model="form.promote" placeholder="==请选择==" clearable :disabled='disabled' >
                                             <el-option
-                                            v-for="item in AuditData"
+                                            v-for="item in promoteData"
                                             :key="item.name"
                                             :label="item.name"
                                             :value="item.name"/>
                                         </el-select>
+                                    </el-form-item>
+                                </td>
+                            </tr>
+                            <tr>
+                               <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>第二年学费：</td>
+                               <td class="formValue">
+                                   <el-form-item prop="two_Tuition">
+                                       <el-input v-model="form.two_Tuition" :disabled='disabled' />
+                                   </el-form-item>
+                                </td>
+                                <td class="tabletitle tdTitle">批次：</td>
+                                <td>
+                                    <el-form-item prop="batch">
+                                        <el-input v-model="form.batch" :disabled='disabled' />
                                     </el-form-item>
                                 </td>
                             </tr>
@@ -263,21 +232,15 @@
                                        <el-input v-model="form.Unpaid" :disabled='disabled' />
                                    </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>申报窗口：</td>
+                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>报读院校：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="Entrance">
-                                        <el-select v-model="form.Entrance" placeholder="==请选择==" clearable :disabled='disabled' >
-                                            <el-option
-                                            v-for="item in EntranceData"
-                                            :key="item.name"
-                                            :label="item.name"
-                                            :value="item.name"/>
-                                        </el-select>
+                                    <el-form-item prop="Enrolment">
+                                        <el-input v-model="form.Enrolment" :disabled='disabled' />
                                     </el-form-item>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>付款方式：</td>
+                                <td class="tabletitle tdTitle">付款方式：</td>
                                 <td class="formValue">
                                     <el-form-item prop="payment">
                                         <el-select v-model="form.payment" placeholder="==请选择==" clearable :disabled='disabled' >
@@ -289,34 +252,31 @@
                                         </el-select>
                                     </el-form-item>
                                 </td>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>申报方式：</td>
+                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>报读专业：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="Sdeclare">
-                                        <el-select v-model="form.Sdeclare" placeholder="==请选择==" clearable :disabled='disabled' >
-                                            <el-option label="个人申报" value="个人申报" />
-                                            <el-option label="单位申报" value="单位申报" />
-                                        </el-select>
+                                    <el-form-item prop="major_enrollment">
+                                        <el-input v-model="form.major_enrollment" :disabled='disabled' />
                                     </el-form-item>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="tabletitle tdTitle"><span style="color: red; margin-right: 5px;">*</span>迁入地：</td>
+                                <td class="tabletitle tdTitle">收据编号：</td>
                                 <td class="formValue">
-                                    <el-form-item prop="Immigration">
-                                        <el-select v-model="form.Immigration" placeholder="==请选择==" clearable :disabled='disabled' >
+                                    <el-form-item prop="receipt">
+                                        <el-input v-model="form.receipt" :disabled='disabled' />
+                                    </el-form-item>
+                                </td>
+                                <td class="tabletitle tdTitle">报读类型：</td>
+                                <td class="formValue">
+                                   <el-form-item prop="Types_type">
+                                       <el-select v-model="form.Types_type" placeholder="==请选择==" clearable :disabled='disabled' >
                                             <el-option
-                                            v-for="item in ImmigrationData"
+                                            v-for="item in TypesData"
                                             :key="item.name"
                                             :label="item.name"
                                             :value="item.name"/>
                                         </el-select>
-                                    </el-form-item>
-                                </td>
-                                <td class="tabletitle tdTitle">工作进度：</td>
-                                <td>
-                                    <el-form-item prop="progress">
-                                        <el-input v-model="form.progress" :disabled='true' />
-                                    </el-form-item>
+                                   </el-form-item>
                                 </td>
                             </tr>
                         </tbody>
@@ -335,7 +295,7 @@
 import jsonData from '@/json/Nation.json'
 import elDragDialog from '@/directive/el-drag-dialog'
 import Datas from '@/json/data.json'
-import { addData, editData } from '@/api/Alldata'
+import { addData, editData } from '@/api/learnForm'
 import { parseTime } from '@/utils/index'
 import VDistpicker from 'v-distpicker'
 import { mapGetters } from 'vuex'
@@ -347,7 +307,7 @@ export default {
         const validPhone = (rule, value, callback) => {
             if (!value) {
                 callback(new Error('请输入电话号码'))
-            } else if (!/^1[3|4|5|7|8][0-9]\d{8}$/.test(value)) {
+            } else if (!/^1[3456789]\d{9}$/.test(value)) {
                 callback(new Error('请输入正确的11位手机号码'))
             } else {
                 callback()
@@ -361,14 +321,22 @@ export default {
             }
         }
         return{
-            learn: Datas.learn, // 赋值 json 学历
             MarriageData: Datas.Marriage,  // 赋值 json 婚姻情况
-            ChildrenData: Datas.Children,  // 赋值
             sourceData: Datas.source,  // 赋值
-            AuditData: Datas.examineMode,  // 赋值
-            EntranceData: Datas.Entrance, 
+            promoteData: [
+                {id:1, name: '高升专'},
+                {id:2, name: '专升本'},
+                {id:3, name: '其他'}
+            ],  // 赋值
+            TypesData:[
+                {id:1, name: '自考'},
+                {id:2, name: '广开'},
+                {id:3, name: '国开'},
+                {id:4, name: '成人高考'},
+                {id:5, name: '网络教育'},
+                {id:6, name: '全日制大学'},
+            ], // 报读类型
             paymentData: Datas.payment, 
-            ImmigrationData: Datas.Immigration,
             dialog: false,
             disabled:false,
             loading: false,
@@ -382,74 +350,66 @@ export default {
                 Gender: '',  //性别
                 age:'', // 年龄
                 IDNumber:'', //身份证号
-                BirthDate:'0', //出生日期
+                BirthDate:null, //出生日期
                 Nation:'', //民族
                 Marriage:'', //婚姻状况
                 phone:'', //手机号码
                 Occupation:'', //职业
-                detailed:'', //详细地址
-                learn:'', //学历
-                graduation:'', //毕业学校
-                Company:'', //工作单位
-                email:'', //邮箱地址
-                social:'', //社保
                 address:'',// 通讯地址
-                Children:'0', //小孩随迁数
-                Account:'', //人保账号
-                AccountPassword:'', //人保账号密码
-                Total:0, //总费用
-                Pay:0, //已缴纳
+                Total:0, //总学费
+                one_Tuition:0, // 第一年学费
+                two_Tuition:0, // 第二年学费
                 Unpaid: 0, //未缴
                 source:'', //来源
-                Audit:'', //审核方式
-                Entrance:'', //申报窗口
+                promote:'', //层次
+                Enrolment:'', //报读院校
                 payment:'', //付款方式
-                Sdeclare:'', //申报方式
-                progress:'无', //工作进度
+                major_enrollment:'', //报读专业
+                batch:'', //批次
+                receipt:'', //收据编号
+                student_account:'', //学员账户
+                student_password:'', //学员密码
+                Payment_status:'', // 缴费情况
+                signTime: null, // 报名日期
+                recruit_teacher: '', // 招生老师
+                reception_teacher: '', // 接待老师
                 Remarks:'', //备注
-                major:'', //专业
-                Immigration:'', //迁移地
-                XueXin:'', //学信网账户
-                XueXinPassword:'', //学信网密码
+                mail:'', // 邮箱
+                Political:'', // 政治面貌
+                register:'', // 户籍
+                emergency_contact:'', // 紧急联系人
+                Types_type:'', // 报读类型
+
             },
             rules: {
                 name: [
                     { required: true, message: '姓名不能为空'}
                 ],
-                Gender: [
-                    { required: true, message: '不能为空'}
-                ],
                 IDNumber: [
                     { required: true,  message: '不能为空', trigger: 'blur' },
                     { validator: validateIDCard, trigger: 'blur' }
                 ],
-                Marriage: [
-                    { required: true, message: '不能为空'}
-                ],
                 phone: [
                     { required: true, trigger: 'blur', validator: validPhone }
                 ],
-                Audit: [
+                promote: [
                     { required: true, message: '不能为空'}
                 ],
-                Sdeclare: [
+                major_enrollment: [
                     { required: true, message: '不能为空'}
                 ],
-                payment: [
+                Enrolment: [
                     { required: true, message: '不能为空'}
                 ],
-                Entrance: [
+                one_Tuition: [
                     { required: true, message: '不能为空'}
                 ],
-                Pay: [
+                two_Tuition: [
                     { required: true, message: '不能为空'}
                 ],
                 Total: [
                     { required: true, message: '不能为空'}
                 ],
-                Immigration:[
-                    { required: true, message: '不能为空'}
-                ]
             },
             fullnames:[],
             HouCity:[],
@@ -480,11 +440,6 @@ export default {
             return item.id === vId
         })
     },
-    onSelected(data){
-        this.form.HouseholdCity = data.province.value
-        this.form.HouseholdProvince = data.city.value
-        this.form.HouseholdA = data.area.value
-    },
     doSubmit(){
         this.form.Founder = this.user.usernames
         this.$refs['form'].validate((value) => {
@@ -500,7 +455,6 @@ export default {
         })
     },
     doAdd(){
-        this.form.belong = '无'
         const time = Date.now()
         this.form.createTime = parseTime(time)
         addData(this.form).then(res => {
@@ -559,6 +513,9 @@ export default {
       },
       MyAge(val){
           this.form.age = val
+      },
+      Payment_status(val) {
+          this.form.Payment_status = val
       }
   },
   computed:{
@@ -566,10 +523,19 @@ export default {
             'user'
         ]),
         Unpaid:function() {
-            return this.form.Unpaid = this.form.Total - this.form.Pay
+            return this.form.Unpaid = this.form.Total - this.form.one_Tuition - this.form.two_Tuition
         },
         BirthDate:function() {
             return this.form.IDNumber.substring(6, 10) + "-" + this.form.IDNumber.substring(10, 12) + "-" + this.form.IDNumber.substring(12, 14);
+        },
+        Payment_status:function() {
+             if(this.form.Total > 0 && this.form.Unpaid === 0) {
+                 return this.form.Payment_status = '学费已缴完'
+             } else if(this.form.Total > 0 && this.form.Unpaid > 0) {
+                 return this.form.Payment_status = '学费未缴完'
+             } else{
+                 return this.form.Payment_status = '学费未缴完'
+             }
         },
         MyAge:function() {
             var myDate = new Date(); 
@@ -587,7 +553,7 @@ export default {
 <style lang="scss" scoped>
 .el-dialog__wrapper{
     /deep/ .el-dialog__body{
-        height:500px;
+        height:600PX;
         overflow-x:scroll;
     }
     .topTitle{
@@ -616,7 +582,7 @@ export default {
     }
     /deep/ .el-textarea__inner{
         padding: 0;
-        height: 179px;
+        height: 210px;
         border: 0;
         border-radius: 0;
     }

@@ -14,6 +14,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // 权限控制
+
 import vueJsonp from 'vue-jsonp'
 Vue.use(vueJsonp)
 
@@ -21,6 +22,7 @@ Vue.use(vueJsonp)
 Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
+
 
 new Vue({
   el: '#app',

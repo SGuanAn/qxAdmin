@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button size="mini" type="warning" icon="el-icon-setting" @click="to" :disabled="this.data.id ==1 ? true:false" >权限</el-button>
+    <el-button size="mini" type="warning" icon="el-icon-setting" :disabled="this.data.id ==1 ? true:false" @click="to" >权限</el-button>
 
     <!-- 弹出层 -->
     <el-dialog title="权限分配" :visible.sync="powerBox" width="600px" align="left" >
